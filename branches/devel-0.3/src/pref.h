@@ -37,77 +37,92 @@ class ScanThread;
 class KConfig;
 class K2sendWidget;
 
-class k2sendPreferences : public KDialogBase
+class k2sendPreferences:public KDialogBase
 {
-    Q_OBJECT
-public:
-    k2sendPreferences(KConfig * c);
-    void customEvent( QCustomEvent * e );
+  Q_OBJECT public:
+    k2sendPreferences (KConfig * c);
+    void customEvent (QCustomEvent * e);
 
-private:
-    k2sendPrefPagePlayer *m_pagePlayer;
-        KListBox     * m_list_device;
-        KPushButton  * m_button_scan;
-        KLineEdit    * m_edit_tty;
-        QLabel       * m_scan_label;
-        QLabel       * m_hci_label;
-        ScanThread   * m_scan_thread;
-        KConfig      * m_config;
+  private:
+      k2sendPrefPagePlayer * m_pagePlayer;
+    KListBox *m_list_device;
+    KPushButton *m_button_scan;
+    KLineEdit *m_edit_tty;
+    QLabel *m_scan_label;
+    QLabel *m_hci_label;
+    ScanThread *m_scan_thread;
+    KConfig *m_config;
 
-private slots:
-    virtual void slotScan();
-    virtual void slotApply();
-    virtual void slotOk();
+    private slots:virtual void slotScan ();
+    virtual void slotApply ();
+    virtual void slotOk ();
 
 
 };
 
 
-class k2sendPrefPagePlayer : public QFrame
+class k2sendPrefPagePlayer:public QFrame
 {
-    Q_OBJECT
-public:
-    k2sendPrefPagePlayer(QWidget *parent = 0);
+  Q_OBJECT public:
+    k2sendPrefPagePlayer (QWidget * parent = 0);
 };
 
-class AddressItem : public QListBoxText
+class AddressItem:public QListBoxText
 {
-    public:
-        AddressItem(const QString & text = QString::null,const QString & a = QString::null)
-            : QListBoxText( text ) , s(a) {}
-        QString addr() const { return s; }
-    private:
-        QString s;
-};
-
-
-class ScanThread : public QThread {
-    public:
-         ScanThread(QWidget *p) : m_parent(p) {}
-        ~ScanThread();
-         virtual void run();
-    private:
-        QWidget  * m_parent;
+  public:
+    AddressItem (const QString & text = QString::null, const QString & a = QString::null)
+    : QListBoxText (text), s (a)
+    {
+    }
+    QString addr () const
+    {
+        return s;
+    }
+  private:
+      QString s;
 };
 
 
-class ScanThreadEvent : public QCustomEvent
+class ScanThread:public QThread
 {
-    public:
-        ScanThreadEvent( int type,  QString string1 = NULL, QString string2 = NULL )
-            : QCustomEvent( type ), s1 ( string1), s2(string2) {}
+  public:
+    ScanThread (QWidget * p):m_parent (p)
+    {
+    }
+     ~ScanThread ();
+    virtual void run ();
+  private:
+    QWidget * m_parent;
+};
 
-        QString string1() const { return s1; }
-        QString string2() const { return s2; }
-        typedef enum Type { Error=66000,
-                            BAddr,
-                            Message,
-                            Clear,
-                            HCIAddr,
-                            } Type;
-    private:
-        QString s1;
-        QString s2;
+
+class ScanThreadEvent:public QCustomEvent
+{
+  public:
+    ScanThreadEvent (int type, QString string1 = NULL, QString string2 = NULL)
+    : QCustomEvent (type), s1 (string1), s2 (string2)
+    {
+    }
+
+    QString string1 () const
+    {
+        return s1;
+    }
+    QString string2 () const
+    {
+        return s2;
+    }
+    typedef enum Type
+    { Error = 66000,
+        BAddr,
+        Message,
+        Clear,
+        HCIAddr,
+    }
+    Type;
+  private:
+    QString s1;
+    QString s2;
 };
 
 #endif // _K2SENDPREF_H_

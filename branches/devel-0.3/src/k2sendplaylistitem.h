@@ -30,34 +30,56 @@
 class KlistView;
 class QTimer;
 
-class  K2sendPlayListItem : public  KListViewItem  {
+class K2sendPlayListItem:public KListViewItem
+{
 
-    public:
-        K2sendPlayListItem(KListView * p , QString  fn);
-        ~K2sendPlayListItem();
-        const QString & file() const { return filename; }
-        int id() const { return _my_id; }
-        int valid() const { return _valid; }
-        virtual void paintCell( QPainter *p, const QColorGroup &cg,
-                                 int column, int width, int alignment );
-        void setPlaying(bool p);
-        bool playing() { return _playing; }
-        QString tag() { return _tag; }
-        void setColor(int r,int g,int b);
+  public:
+    K2sendPlayListItem (KListView * p, QString fn);
+    ~K2sendPlayListItem ();
+    const QString & file () const
+    {
+        return m_filename;
+    }
+    int id () const
+    {
+        return _my_id;
+    }
+    int valid () const
+    {
+        return _valid;
+    }
+    virtual void paintCell (QPainter * p, const QColorGroup & cg, int column, int width, int alignment);
+    void setPlaying (bool p);
+    bool playing ()
+    {
+        return _playing;
+    }
+    QString tag ()
+    {
+        return _tag;
+    }
+    void setColor (int r, int g, int b);
+    QString & title();
+    QString & artist();
+    QString & album();
+    QString & length();
 
-    private:
-         QString filename;
-         static int _id;
-         int _my_id;
-         bool _valid;
-         bool _playing;
-         QString _tag;
-         QColor  _color;
-         int _normal_height;
-         int _double_height;
-         QString str_id;
+
+  private:
+    QString m_filename;
+    QString m_title;
+    QString m_album;
+    QString m_artist;
+    QString m_length;
+
+    static int _id;
+    int _my_id;
+    bool _valid;
+    bool _playing;
+    QString _tag;
+    QColor _color;
+    int _normal_height;
+    int _double_height;
+    QString str_id;
 
 };
-
-
-

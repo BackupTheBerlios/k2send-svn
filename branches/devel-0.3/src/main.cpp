@@ -32,56 +32,49 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 
-static const char description[] =
-    I18N_NOOP("Kde gui for the BlueMP3 player");
+static const char description[] = I18N_NOOP ("Kde gui for the BlueMP3 player");
 
 static const char version[] = "0.2";
 
-static KCmdLineOptions options[] =
-{
-    { "+[URL]", I18N_NOOP( "Document to open." ), 0 },
+static KCmdLineOptions options[] = {
+    {"+[URL]", I18N_NOOP ("Document to open."), 0},
     KCmdLineLastOption
 };
 
-int main(int argc, char **argv)
+int
+main (int argc, char **argv)
 {
-    KAboutData about("k2send", I18N_NOOP("k2send"), version, description,
-                     KAboutData::License_GPL, "(C) 2004 David Voswinkel", 0, 0, "d.voswinkel@netcologne.de");
-    about.addAuthor( "David Voswinkel", 0, "d.voswinkel@netcologne.de" );
-    KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions(options);
+    KAboutData about ("k2send", I18N_NOOP ("k2send"), version, description,
+                      KAboutData::License_GPL, "(C) 2004 David Voswinkel", 0, 0, "d.voswinkel@netcologne.de");
+    about.addAuthor ("David Voswinkel", 0, "d.voswinkel@netcologne.de");
+    KCmdLineArgs::init (argc, argv, &about);
+    KCmdLineArgs::addCmdLineOptions (options);
     KApplication app;
 
     // register ourselves as a dcop client
-    app.dcopClient()->registerAs(app.name(), false);
+    app.dcopClient ()->registerAs (app.name (), false);
 
     // see if we are starting with session management
-    if (app.isRestored())
-    {
-        RESTORE(k2send);
+    if (app.isRestored ()) {
+        RESTORE (k2send);
     }
-    else
-    {
+    else {
         // no session.. just start up normally
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-        if (args->count() == 0)
-        {
+        KCmdLineArgs *args = KCmdLineArgs::parsedArgs ();
+        if (args->count () == 0) {
             k2send *widget = new k2send;
-            widget->show();
+            widget->show ();
         }
-        else
-        {
+        else {
             int i = 0;
-            for (; i < args->count(); i++)
-            {
+            for (; i < args->count (); i++) {
                 k2send *widget = new k2send;
-                widget->show();
-                widget->load(args->url(i));
+                widget->show ();
+                widget->load (args->url (i));
             }
         }
-        args->clear();
+        args->clear ();
     }
 
-    return app.exec();
+    return app.exec ();
 }
-

@@ -34,20 +34,24 @@
 
 class k2sendWidget;
 
-class K2sendConsole : public QThread {
-    public:
-        K2sendConsole(k2sendWidget *p);
-        ~K2sendConsole();
-        void setTty(QString & str);
-        QString & tty()  { return tty_dev; }
-        virtual void run();
-        void restart();
-        void stop();
-        void clear();
+class K2sendConsole:public QThread
+{
+  public:
+    K2sendConsole (k2sendWidget * p);
+    ~K2sendConsole ();
+    void setTty (QString & str);
+      QString & tty ()
+    {
+        return tty_dev;
+    }
+    virtual void run ();
+    void restart ();
+    void stop ();
+    void clear ();
 
-    private:
-        QString   tty_dev;
-        k2sendWidget  * m_parent;
-        QWaitCondition cond_dev;
+  private:
+    QString tty_dev;
+    k2sendWidget *m_parent;
+    QWaitCondition cond_dev;
 };
 #endif

@@ -46,93 +46,118 @@
 
 #include "k2sendplaylistitem.h"
 
-int K2sendPlayListItem::_id=0;
+int
+    K2sendPlayListItem::_id =
+    0;
 
 
-K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) :
-                    KListViewItem(p) , filename(fn) ,_playing(FALSE) , _tag("k2sendtag")
+K2sendPlayListItem::K2sendPlayListItem (KListView * p, QString fn):
+KListViewItem (p), m_filename (fn), _playing (FALSE), _tag ("k2sendtag")
 {
 
-    QString length;
     QString rate;
     _id++;
     _my_id = _id;
     _valid = TRUE;
-    TagLib::MPEG::File mp3file(filename.latin1());
-    if(!mp3file.tag() || !mp3file.isValid()){
-          kdDebug(200010) << "K2sendPlayListItem " << filename << " not valid " << endl;
-         _valid = FALSE;
-         return;
-    }
-
-    str_id.sprintf("%03i",p->childCount());
-    setText(0,str_id);
-
-    if (!mp3file.tag()->title().isEmpty()){
-        setText(1,mp3file.tag()->title().toCString());
-        setText(2,mp3file.tag()->album().toCString());
-        setText(3,mp3file.tag()->artist().toCString());
-
-    } else {
-        QFileInfo info(filename);
-        setText(1,info.baseName());
-    }
-    int len = mp3file.audioProperties()->length();
-    if (len)
-        length.sprintf("%02i:%02i",len/60,len%60);
-    else {
-        kdDebug(200010) << "K2sendPlayListItem " << filename << " is zero lenght " << endl;
+    TagLib::MPEG::File mp3file (m_filename.latin1 ());
+    if (!mp3file.tag () || !mp3file.isValid ()) {
+        kdDebug (200010) << "K2sendPlayListItem " << m_filename << " not valid " << endl;
         _valid = FALSE;
         return;
     }
-    rate.sprintf("%i", mp3file.audioProperties()->bitrate());
-    setText(4,length);
-    setText(5,rate);
-    _normal_height = height();
-    _double_height = (int)(height() * 1.5);
 
-}
+    str_id.sprintf ("%03i", p->childCount ());
+    setText (0, str_id);
 
-void K2sendPlayListItem::setPlaying(bool p)
-{
-     _playing = p;
-     if (p){
-         setSelected(FALSE);
-         setHeight(_double_height);
-         setText(0,0);
-         setPixmap (0,DesktopIcon( "player_play", 16));
-     } else {
-        setHeight(_normal_height);
-        setPixmap (0,0);
-        setText(0,str_id);
-     }
-}
+    if (!mp3file.tag ()->title ().isEmpty ()) {
+        m_title = mp3file.tag ()->title ().toCString ();
+        setText (1, m_title);
+        m_album = mp3file.tag ()->album ().toCString ();
+        setText (2, m_album);
+        m_artist = mp3file.tag ()->artist ().toCString ();
+        setText (3, m_artist);
 
-
-void K2sendPlayListItem::paintCell( QPainter *p, const QColorGroup &cg,
-                                 int column, int width, int alignment )
-{
-    QColorGroup _cg( cg );
-    QColor c = _cg.text();
-    if (_playing){
-        _cg.setColor( QColorGroup::Text, _color );
-        //_cg.setColor( QColorGroup::Base, Qt::white );
-        QListViewItem::paintCell( p, _cg, column, width, alignment );
     }
-    if (isAlternate())
-        _cg.setColor( QColorGroup::Base, KGlobalSettings::alternateBackgroundColor());
-    QListViewItem::paintCell( p, _cg, column, width, alignment );
-
+    else {
+        QFileInfo info (m_filename);
+        m_title = info.baseName ();
+        setText (1, m_title);
+    }
+    int len = mp3file.audioProperties ()->length ();
+    if (len)
+        m_length.sprintf ("%02i:%02i", len / 60, len % 60);
+    else {
+        kdDebug (200010) << "K2sendPlayListItem " << m_filename << " is zero lenght " << endl;
+        _valid = FALSE;
+        return;
+    }
+    rate.sprintf ("%i", mp3file.audioProperties ()->bitrate ());
+    setText (4, m_length);
+    setText (5, rate);
+    _normal_height = height ();
+    _double_height = (int) (height () * 1.5);
 
 }
 
-void K2sendPlayListItem::setColor(int r,int g,int b)
+void
+K2sendPlayListItem::setPlaying (bool p)
 {
-    _color.setRgb (r,g ,b);
-    repaint() ;
+    _playing = p;
+    if (p) {
+        setSelected (FALSE);
+        setHeight (_double_height);
+        setText (0, 0);
+        setPixmap (0, DesktopIcon ("player_play", 16));
+    }
+    else {
+        setHeight (_normal_height);
+        setPixmap (0, 0);
+        setText (0, str_id);
+    }
 }
 
-K2sendPlayListItem::~K2sendPlayListItem(){
+
+void
+K2sendPlayListItem::paintCell (QPainter * p, const QColorGroup & cg, int column, int width, int alignment)
+{
+    QColorGroup _cg (cg);
+    QColor c = _cg.text ();
+    if (_playing) {
+        _cg.setColor (QColorGroup::Text, _color);
+        //_cg.setColor( QColorGroup::Base, Qt::white );
+        QListViewItem::paintCell (p, _cg, column, width, alignment);
+    }
+    if (isAlternate ())
+        _cg.setColor (QColorGroup::Base, KGlobalSettings::alternateBackgroundColor ());
+    QListViewItem::paintCell (p, _cg, column, width, alignment);
+
 
 }
 
+void
+K2sendPlayListItem::setColor (int r, int g, int b)
+{
+    _color.setRgb (r, g, b);
+    repaint ();
+}
+QString & K2sendPlayListItem::title()
+{
+    return m_title;
+}
+QString & K2sendPlayListItem::artist()
+{
+    return m_artist;
+}
+QString & K2sendPlayListItem::album()
+{
+    return m_album;
+}
+QString & K2sendPlayListItem::length()
+{
+    return m_length;
+}
+
+K2sendPlayListItem::~K2sendPlayListItem ()
+{
+
+}

@@ -46,121 +46,130 @@
 
 
 
-K2sendConsole::K2sendConsole(k2sendWidget *p)
+K2sendConsole::K2sendConsole (k2sendWidget * p)
 {
     m_parent = p;
 }
 
-K2sendConsole::~K2sendConsole()
+K2sendConsole::~K2sendConsole ()
 {
-    if (running()){
-        terminate();
-        wait();
+    if (running ()) {
+        terminate ();
+        wait ();
     }
 }
 
-void K2sendConsole::run()
+void
+K2sendConsole::run ()
 {
-    K2sendStatusEvent * se;
-    fd_set            readfds;
-    struct timeval    tv;
+    K2sendStatusEvent *se;
+    fd_set readfds;
+    struct timeval tv;
     int rc;
-    while(running()){
-        QFileInfo  info(tty_dev);
-        if (!info.isReadable()){
-            QString msg = QString("Cannot read from " + tty_dev) ;
-            se = new K2sendStatusEvent(K2sendStatusEvent::EventMessage,msg,2000);
-            QApplication::postEvent( m_parent, se );
-            kdDebug(200010) << "K2sendConsole::run terminate" << endl;
+    while (running ()) {
+        QFileInfo info (tty_dev);
+        if (!info.isReadable ()) {
+            QString msg = QString ("Cannot read from " + tty_dev);
+            se = new K2sendStatusEvent (K2sendStatusEvent::EventMessage, msg, 2000);
+            QApplication::postEvent (m_parent, se);
+            kdDebug (200010) << "K2sendConsole::run terminate" << endl;
 /*            terminate();
             wait();*/
             return;
 
-        } else {
+        }
+        else {
             char buffer[128];
-            int fd = open( tty_dev.latin1(), O_RDWR | O_NOCTTY | O_NDELAY );
+            int fd = open (tty_dev.latin1 (), O_RDWR | O_NOCTTY | O_NDELAY);
             if (!fd) {
-                QString msg = QString("Cannot open " + tty_dev) ;
-                se = new K2sendStatusEvent(K2sendStatusEvent::EventMessage,msg,2000);
-                QApplication::postEvent(m_parent, se );
-                kdDebug(200010) << "K2sendConsole::run terminate" << endl;
+                QString msg = QString ("Cannot open " + tty_dev);
+                se = new K2sendStatusEvent (K2sendStatusEvent::EventMessage, msg, 2000);
+                QApplication::postEvent (m_parent, se);
+                kdDebug (200010) << "K2sendConsole::run terminate" << endl;
 /*                terminate();
                 wait();*/
                 return;
             }
-            fcntl( fd, F_SETFL, 0 );
+            fcntl (fd, F_SETFL, 0);
             struct termios options;
-            /*Get the current options for the port*/
-            tcgetattr(fd, &options);
-            /*Set the Baud rates to 115200*/
-            cfsetispeed(&options, B115200);
-            cfsetospeed(&options, B115200);
-            /*Enable received and set local mode*/
+            /*Get the current options for the port */
+            tcgetattr (fd, &options);
+            /*Set the Baud rates to 115200 */
+            cfsetispeed (&options, B115200);
+            cfsetospeed (&options, B115200);
+            /*Enable received and set local mode */
             options.c_cflag |= (CLOCAL | CREAD);
-            /*Set new options for port*/
-            tcsetattr(fd, TCSANOW, &options);
-            /*Set data bits*/
-            options.c_cflag &= ~CSIZE;     /*Mask the character size bits*/
-            options.c_cflag |= CS8;          /*Select 8 data bits*/
-            /*Set RAW input*/
+            /*Set new options for port */
+            tcsetattr (fd, TCSANOW, &options);
+            /*Set data bits */
+            options.c_cflag &= ~CSIZE;  /*Mask the character size bits */
+            options.c_cflag |= CS8;     /*Select 8 data bits */
+            /*Set RAW input */
             options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-            /*Set Raw output*/
+            /*Set Raw output */
             options.c_oflag &= ~OPOST;
-            /*Set timeout to 1 sec*/
+            /*Set timeout to 1 sec */
             options.c_cc[VMIN] = 0;
             options.c_cc[VTIME] = 10;
             int len;
-            while (running()){
-                FD_ZERO(&readfds);
-                FD_SET(fd, &readfds );
-                tv.tv_sec=0;
-                tv.tv_usec=0;
-                rc = select(fd+1, &readfds, NULL, NULL, &tv);
-                if (rc>0){
-                    if (FD_ISSET(fd, &readfds)) {
-                        len = read(fd,buffer,128);
+            while (running ()) {
+                FD_ZERO (&readfds);
+                FD_SET (fd, &readfds);
+                tv.tv_sec = 0;
+                tv.tv_usec = 0;
+                rc = select (fd + 1, &readfds, NULL, NULL, &tv);
+                if (rc > 0) {
+                    if (FD_ISSET (fd, &readfds)) {
+                        len = read (fd, buffer, 128);
                         buffer[len] = 0;
-                        if (len && buffer[0] != '\n'){
-                            se = new K2sendStatusEvent(K2sendStatusEvent::EventConsole,buffer);
-                            QApplication::postEvent( m_parent, se );
-                         }
+                        if (len && buffer[0] != '\n') {
+                            se = new K2sendStatusEvent (K2sendStatusEvent::EventConsole, buffer);
+                            QApplication::postEvent (m_parent, se);
+                        }
                     }
-                } else if(!rc){
-                    this->msleep(100);
-                } else {
-                    kdDebug(200010) << "K2sendConsole::run select error " << tty_dev << endl;
-                    this->sleep(1);
+                }
+                else if (!rc) {
+                    this->msleep (100);
+                }
+                else {
+                    kdDebug (200010) << "K2sendConsole::run select error " << tty_dev << endl;
+                    this->sleep (1);
                 }
 
-             }
-             close(fd);
+            }
+            close (fd);
         }
     }
 }
 
-void K2sendConsole::setTty(QString & str){
-    tty_dev = str ;
-    kdDebug(200010) << "K2sendConsole::setTty " << tty_dev << endl;
+void
+K2sendConsole::setTty (QString & str)
+{
+    tty_dev = str;
+    kdDebug (200010) << "K2sendConsole::setTty " << tty_dev << endl;
 }
 
-void K2sendConsole::restart(){
+void
+K2sendConsole::restart ()
+{
 
-    if (running()){
-        kdDebug(200010) << "K2sendConsole::restart stop thread " << tty_dev << endl;
-        terminate();
-        wait();
+    if (running ()) {
+        kdDebug (200010) << "K2sendConsole::restart stop thread " << tty_dev << endl;
+        terminate ();
+        wait ();
     }
-    kdDebug(200010) << "K2sendConsole::restart start thread " << tty_dev << endl;
-    start();
+    kdDebug (200010) << "K2sendConsole::restart start thread " << tty_dev << endl;
+    start ();
 
 }
 
-void K2sendConsole::stop(){
+void
+K2sendConsole::stop ()
+{
 
-    if (running()){
-        kdDebug(200010) << "K2sendConsole::stop " << tty_dev << endl;
-        terminate();
-        wait();
+    if (running ()) {
+        kdDebug (200010) << "K2sendConsole::stop " << tty_dev << endl;
+        terminate ();
+        wait ();
     }
 }
-

@@ -18,83 +18,98 @@
 // $LastChangedBy: optixx $
 
 
-void k2sendWidgetBase::slotPlay()
+void
+k2sendWidgetBase::slotPlay ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotStop()
+void
+k2sendWidgetBase::slotStop ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotSkip()
+void
+k2sendWidgetBase::slotSkip ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotLoudness()
+void
+k2sendWidgetBase::slotLoudness ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotVolume()
+void
+k2sendWidgetBase::slotVolume ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotAddFiles()
+void
+k2sendWidgetBase::slotAddFiles ()
 {
 
 }
 
 
-void k2sendWidgetBase::slotRemoveFiles()
+void
+k2sendWidgetBase::slotRemoveFiles ()
 {
 
 }
 
-void k2sendWidgetBase::slotConfig()
+void
+k2sendWidgetBase::slotConfig ()
 {
 
 }
 
-void k2sendWidgetBase::slotConsoleConfig()
+void
+k2sendWidgetBase::slotConsoleConfig ()
 {
 
 }
 
-void k2sendWidgetBase::slotConsoleStop()
+void
+k2sendWidgetBase::slotConsoleStop ()
 {
 
 }
 
-void k2sendWidgetBase::slotConsolePlay()
+void
+k2sendWidgetBase::slotConsolePlay ()
 {
 
 }
 
-void k2sendWidgetBase::slotConsoleClear()
+void
+k2sendWidgetBase::slotConsoleClear ()
 {
 
 }
 
-void k2sendWidgetBase::slotLength()
+void
+k2sendWidgetBase::slotLength ()
 {
 
 }
 
-void k2sendWidgetBase::slotLengthPressed()
+void
+k2sendWidgetBase::slotLengthPressed ()
 {
 
 }
 
-void k2sendWidgetBase::slotPlaylistClear()
+void
+k2sendWidgetBase::slotPlaylistClear ()
 {
 
 }

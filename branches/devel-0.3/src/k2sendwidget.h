@@ -38,58 +38,55 @@ class K2sendPlayer;
 class K2sendConsole;
 class KURL;
 class KPrinter;
+class OSDWidget;
 
-class k2sendWidget : public k2sendWidgetBase
+class k2sendWidget:public k2sendWidgetBase
 {
-    Q_OBJECT
+  Q_OBJECT public:
+    k2sendWidget (QWidget * parent = 0, const char *name = 0, WFlags fl = 0, KConfig * c = 0);
+     ~k2sendWidget ();
+    void consoleConfigRefresh (QString & tty);
+    void configRefresh (QString & addr);
+    void customEvent (QCustomEvent * e);
+    QString currentURL ();
+    void openURL (QString url);
+    void openURL (const KURL & url);
+    void print (QPainter *, KPrinter * kp, int height, int width);
+    void setProgress (int v);
 
-public:
-    k2sendWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0, KConfig * c = 0);
-    ~k2sendWidget();
-    void consoleConfigRefresh(QString& tty);
-    void configRefresh(QString& addr);
-    void customEvent( QCustomEvent * e );
-    QString currentURL();
-    void openURL(QString url);
-    void openURL(const KURL& url);
-    void print(QPainter *, KPrinter * kp,int height, int width);
-    void setProgress(int v);
+      signals:void signalChangeStatusbar (const QString & text);
+    void signalChangeCaption (const QString & text);
 
-signals:
-    void signalChangeStatusbar(const QString& text);
-    void signalChangeCaption(const QString& text);
+    public slots:virtual void slotPlay ();
+    virtual void slotStop ();
+    virtual void slotSkip ();
+    virtual void slotLoudness ();
+    virtual void slotVolume ();
+    virtual void slotAddFiles ();
+    virtual void slotRemoveFiles ();
+    virtual void slotConfig ();
+    virtual void slotConsoleConfig ();
+    virtual void slotLength ();
+    virtual void slotSelectItem (QListViewItem *);
+    virtual void slotPlaylistClear ();
+    virtual void slotConsolePlay ();
+    virtual void slotConsoleStop ();
+    virtual void slotConsoleClear ();
+    virtual void slotLengthPressed ();
+    virtual void slotRemoveBranch ();
+    virtual void slotAddFile (QString & path);
 
-public slots:
-    virtual void slotPlay();
-    virtual void slotStop();
-    virtual void slotSkip();
-    virtual void slotLoudness();
-    virtual void slotVolume();
-    virtual void slotAddFiles();
-    virtual void slotRemoveFiles();
-    virtual void slotConfig();
-    virtual void slotConsoleConfig();
-    virtual void slotLength();
-    virtual void slotSelectItem( QListViewItem *);
-    virtual void slotPlaylistClear();
-    virtual void slotConsolePlay();
-    virtual void slotConsoleStop();
-    virtual void slotConsoleClear();
-    virtual void slotLengthPressed();
-    virtual void slotRemoveBranch();
-    virtual void slotAddFile(QString & path);
+    private slots:void slotOnURL (const QString & url);
+    void slotSetTitle (const QString & title);
 
-private slots:
-    void slotOnURL(const QString& url);
-    void slotSetTitle(const QString& title);
-
-private:
-    void setSelected();
-    K2sendPlayer       * m_player;
-    K2sendConsole      * m_console_cont;
-    KConfig            * m_config;
-    bool               length_pressed;
-    QString             m_url;
+  private:
+    void setSelected ();
+    K2sendPlayer *m_player;
+    K2sendConsole *m_console_cont;
+    KConfig *m_config;
+    bool length_pressed;
+    QString m_url;
+    OSDWidget * m_osd;
 };
 
 
@@ -97,4 +94,3 @@ private:
 
 
 #endif
-

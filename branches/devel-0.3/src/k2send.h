@@ -46,49 +46,42 @@ class KURL;
 class KConfig;
 class KSystemTray;
 
-class k2send : public KMainWindow
+class k2send:public KMainWindow
 {
-    Q_OBJECT
-public:
-    k2send();
-    virtual ~k2send();
-    void load(const KURL& url);
-protected:
-    virtual void dragEnterEvent(QDragEnterEvent *event);
-    virtual void dropEvent(QDropEvent *event);
+  Q_OBJECT public:
+    k2send ();
+    virtual ~ k2send ();
+    void load (const KURL & url);
+  protected:
+      virtual void dragEnterEvent (QDragEnterEvent * event);
+    virtual void dropEvent (QDropEvent * event);
 
 
-private slots:
-    void fileNew();
-    void fileOpen();
-    void filePrint();
-    void importPlaylist();
-    void optionsShowToolbar();
-    void optionsShowStatusbar();
-    void optionsConfigureKeys();
-    void optionsConfigureToolbars();
-    void optionsPreferences();
-    void newToolbarConfig();
-    void changeStatusbar(const QString& text);
-    void changeCaption(const QString& text);
+    private slots:void fileNew ();
+    void fileOpen ();
+    void filePrint ();
+    void importPlaylist ();
+    void optionsShowToolbar ();
+    void optionsShowStatusbar ();
+    void optionsConfigureKeys ();
+    void optionsConfigureToolbars ();
+    void optionsPreferences ();
+    void newToolbarConfig ();
+    void changeStatusbar (const QString & text);
+    void changeCaption (const QString & text);
 
-private:
-    void setupAccel();
-    void setupActions();
+  private:
+    void setupAccel ();
+    void setupActions ();
 
-private:
-    k2sendWidget     * m_view;
-    KPrinter         * m_printer;
-    KToggleAction    * m_toolbarAction;
-    KToggleAction    * m_statusbarAction;
-    KConfig          * m_config;
-protected:
-    KSystemTray* trayicon;
+  private:
+      k2sendWidget * m_view;
+    KPrinter *m_printer;
+    KToggleAction *m_toolbarAction;
+    KToggleAction *m_statusbarAction;
+    KConfig *m_config;
+  protected:
+      KSystemTray * trayicon;
 };
 
 #endif // _K2SEND_H_
-
-
-
-
-
