@@ -19,11 +19,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// $Id$
+// $Id: k2sendconsole.h 2 2004-06-19 09:38:31Z optixx $
 //
 // $HeadURL
 //
-// $LastChangedBy$
+// $LastChangedBy: optixx $
 
 #ifndef _K2SENDCONSOLE_H_
 #define _K2SENDCONSOLE_H_

@@ -18,11 +18,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// $Id$
+// $Id: k2sendwidget.h 2 2004-06-19 09:38:31Z optixx $
 //
 // $HeadURL
 //
-// $LastChangedBy$
+// $LastChangedBy: optixx $
 
 
 #ifndef _K2SENDWIDGET_H_
