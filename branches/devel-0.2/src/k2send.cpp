@@ -59,17 +59,12 @@ k2send::k2send()
     m_config = new KConfig("k2send");
     m_view = new k2sendWidget(this,"k2sendwidget",0,m_config);
 
-    setAcceptDrops(true);
+    setAcceptDrops(FALSE);
+
     setCentralWidget(m_view);
     setupActions();
     statusBar()->show();
     setAutoSaveSettings();
-
-    connect(m_view, SIGNAL(signalChangeStatusbar(const QString&)),
-            this,   SLOT(changeStatusbar(const QString&)));
-    connect(m_view, SIGNAL(signalChangeCaption(const QString&)),
-            this,   SLOT(changeCaption(const QString&)));
-
     statusBar()->insertFixedItem("9999 Files", 0, true);
     statusBar()->insertFixedItem("00:00:00", 1, true);
     statusBar()->insertFixedItem("000 kbit/s", 2, true);
@@ -78,12 +73,18 @@ k2send::k2send()
     statusBar()->changeItem ("0 Files", 0);
     statusBar()->changeItem ("0 kbit/s", 2);
 
+    connect(m_view, SIGNAL(signalChangeStatusbar(const QString&)),
+            this,   SLOT(changeStatusbar(const QString&)));
+    connect(m_view, SIGNAL(signalChangeCaption(const QString&)),
+            this,   SLOT(changeCaption(const QString&)));
+
 }
 
 k2send::~k2send()
 {
     delete m_view;
 }
+
 
 void k2send::setupActions()
 {
@@ -151,13 +152,8 @@ void k2send::fileOpen()
         m_view->openURL(url);
 }
 
-
-
 void k2send::filePrint()
 {
-    // this slot is called whenever the File->Print menu is selected,
-    // the Print shortcut is pressed (usually CTRL+P) or the Print toolbar
-    // button is clicked
     if (!m_printer) m_printer = new KPrinter;
 
     m_printer->setFullPage( true );
@@ -166,11 +162,8 @@ void k2send::filePrint()
     {
         QPainter p;
         p.begin(m_printer);
-        // we let our view do the actual printing
         QPaintDeviceMetrics metrics(m_printer);
         m_view->print(&p,m_printer,metrics.height(), metrics.width());
-
-        // and send the result to the printer
         p.end();
     }
 }
@@ -193,7 +186,7 @@ void k2send::optionsShowStatusbar()
 
 void k2send::optionsConfigureKeys()
 {
-    KKeyDialog::configureKeys(actionCollection(), "k2sendui.rc");
+    KKeyDialog::configure(actionCollection(), "k2sendui.rc");
 }
 
 void k2send::optionsConfigureToolbars()

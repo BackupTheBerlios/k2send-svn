@@ -81,7 +81,7 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) :
     if (len)
         length.sprintf("%02i:%02i",len/60,len%60);
     else {
-        kdDebug(200010) << "K2sendPlayListItem " << filename << " not is zero lenght " << endl;
+        kdDebug(200010) << "K2sendPlayListItem " << filename << " is zero lenght " << endl;
         _valid = FALSE;
         return;
     }

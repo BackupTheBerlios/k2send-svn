@@ -50,13 +50,13 @@
 #include <kdebug.h>
 #include <ktextbrowser.h>
 #include <kprinter.h>
-#include <kfiletreebranch.h>
 
 #include "k2sendwidget.h"
 #include "k2sendplaylist.h"
 #include "k2sendplaylistitem.h"
 #include "k2sendplayer.h"
 #include "k2sendconsole.h"
+#include "k2sendsource.h"
 
 
 k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig * c)
@@ -67,15 +67,9 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
     QString addr = m_config->readEntry ("baddr","00:00:00:00:00:00");
 
     m_console->setTextFormat(QTextEdit::PlainText);
-    m_source->setShowFolderOpenPixmap(TRUE);
-    m_source->addColumn("File");
-    //m_source->addBranch(KURL(user.homeDir()),"Home");
-    m_source->setDragEnabled(TRUE);
-
     m_config->setGroup("player");
     int volume    = m_config->readNumEntry ("volume",50);
     int loud_filt = m_config->readNumEntry ("loud_filt",0);
-
     m_player = new K2sendPlayer(this,volume,loud_filt);
 
     m_config->setGroup("console");
@@ -88,12 +82,15 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
     m_console->clear();
     m_console_cont->setTty(tty);
     m_volume->setValue(volume);
+    m_playlist->read(m_config);
+    m_source->read(m_config,this);
 
-    readPlaylist();
-    readSourcelist();
-
-    connect( m_playlist, SIGNAL(doubleClicked ( QListViewItem * ,const QPoint&, int) ),
-        this, SLOT( slotSelectItem( QListViewItem * ,const QPoint&, int) ) );
+    connect( m_playlist, SIGNAL(executed( QListViewItem *) ),
+        this, SLOT( slotSelectItem( QListViewItem *) ) );
+    connect(m_playlist, SIGNAL(signalChangeStatusbar(const QString&)),
+            this->parent(),   SLOT(changeStatusbar(const QString&)));
+    connect(m_source, SIGNAL(signalChangeStatusbar(const QString&)),
+            this->parent(),   SLOT(changeStatusbar(const QString&)));
 }
 
 k2sendWidget::~k2sendWidget()
@@ -102,80 +99,11 @@ k2sendWidget::~k2sendWidget()
     m_config->writeEntry ("volume",m_player->currentVolume());
     m_config->writeEntry ("loud_filt",m_player->currentLoundness());
     m_config->sync();
-    writePlaylist();
-    writeSourcelist();
+    m_playlist->write(m_config,this);
+    m_source->write(m_config);
     kdDebug(200010) << "k2sendWidget::~k2sendWidget config written " <<   endl;
     delete m_player;
 }
-
-
-void k2sendWidget::writePlaylist()
-{
-    QListViewItemIterator it( m_playlist );
-    QStrList list;
-    int cnt = 0;
-    int total = list.count();
-    while ( it.current() ) {
-        K2sendPlayListItem *item =(K2sendPlayListItem*) it.current();
-        list.append(item->file().latin1());
-        ++it;
-        cnt++;
-        m_bar->setProgress( int((100.0 / total) * cnt));
-    }
-    m_config->setGroup("playlist");
-    m_config->writeEntry ("files",list);
-    m_config->sync();
-}
-
-void k2sendWidget::readPlaylist()
-{
-    QStrList list;
-    m_config->setGroup("playlist");
-    m_config->readListEntry ("files",list);
-    if (list.count()){
-        QStrListIterator it( list );
-        while (it.current()) {
-            QString file = QString::fromUtf8(it.current());
-            K2sendPlayListItem * new_item = new K2sendPlayListItem((KListView*)m_playlist,file);
-            if (new_item->valid())
-                m_playlist->insertItem (new_item);
-            else {
-                delete new_item;
-            }++it;
-        }
-    }
-    QString msg = QString("%1 Files").arg(m_playlist->childCount());
-    ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
-}
-
-void k2sendWidget::writeSourcelist()
-{
-    QStrList list;
-    KFileTreeBranchList branches;
-    KFileTreeBranch * branch;
-    branches = m_source->branches();
-    for ( branch = branches.first(); branch; branch = branches.next() )
-        list.append(branch->rootUrl().path().latin1());
-    m_config->setGroup("source");
-    m_config->writeEntry ("files",list);
-    m_config->sync();
-}
-
-void k2sendWidget::readSourcelist()
-{
-    QStrList list;
-    m_config->setGroup("source");
-    m_config->readListEntry ("files",list);
-    if (list.count()){
-        QStrListIterator it( list );
-        while (it.current()) {
-            QString file = QString::fromUtf8(it.current());
-            openURL(file);
-            ++it;
-        }
-    }
-}
-
 
 void k2sendWidget::customEvent( QCustomEvent * e )
 {
@@ -288,7 +216,7 @@ void k2sendWidget::nextIndex()
 }
 
 
-void k2sendWidget::slotSelectItem(QListViewItem * item,const QPoint& p, int i){
+void k2sendWidget::slotSelectItem(QListViewItem * item){
     if (m_playlist->childCount()){
         if (m_head)
             m_head->setPlaying(FALSE);
@@ -351,76 +279,16 @@ void k2sendWidget::slotLengthPressed()
         length_pressed = TRUE;
 }
 
-
-
-void k2sendWidget::addDir(const QString & path)
-{
-    K2sendPlayListItem * new_item;
-
-    QDir dir(path);
-    dir.setMatchAllDirs (TRUE);
-    dir.setFilter( QDir::All );
-    dir.setSorting( QDir::Name | QDir::DirsFirst);
-    const QFileInfoList *list = dir.entryInfoList();
-    QFileInfoListIterator it( *list );
-    QFileInfo *fi;
-    int cnt = 0;
-    int total = list->count();
-
-
-    while ( (fi = it.current()) != 0 ) {
-        cnt++;
-        m_bar->setProgress( int((100.0 / total) * cnt));
-        if (fi->isDir()){
-            if (fi->fileName() != "." &&  fi->fileName() != "..")
-                addDir(fi->filePath());
-        } else {
-            if (!isDoubleEntry(fi->filePath())){
-                kdDebug(200010) << "k2sendWidget::addDir file=" << fi->filePath() << endl;
-
-                new_item = new K2sendPlayListItem((KListView*)m_playlist, fi->filePath());
-                if (new_item->valid())
-                    m_playlist->insertItem (new_item);
-                else
-                    delete new_item;
-            }
-        }
-        ++it;
-    }
-    m_bar->setProgress(0);
-}
-bool k2sendWidget::isDoubleEntry(const QString& file) {
-    QListViewItemIterator it( m_playlist );
-    while ( it.current() ) {
-        K2sendPlayListItem *item =(K2sendPlayListItem*) it.current();
-        if ( item->file() == file ){
-            return TRUE;
-        }
-        ++it;
-    }
-    return FALSE;
-}
-
-
 void k2sendWidget::slotAddFiles()
 {
-    KFileTreeViewItem * item = m_source->currentKFileTreeViewItem();
-    if (item){
-        if (!item->isDir()){
-            if (!isDoubleEntry(item->path())){
-                kdDebug(200010) << "k2sendWidget::slotAddFiles file=" << item->path() << endl;
-                K2sendPlayListItem * new_item = new K2sendPlayListItem((KListView*)m_playlist,item->path());
-                if (new_item->valid())
-                    m_playlist->insertItem (new_item);
-                else
-                    delete new_item;
-            }
-        } else {
-            addDir(item->path());
-        }
-        QString msg = QString("%1 Files").arg(m_playlist->childCount());
-        ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
-    }
+    kdDebug(200010) << "k2sendWidget::slotAddFiles " << endl;
+    QPtrList< QListViewItem > list = m_source->selectedItems ();
+    KFileTreeViewItem * item ;
+    for ( item = (KFileTreeViewItem*)list.first(); item; item = (KFileTreeViewItem*)list.next())
+        m_playlist->add(item->path());
+
+    QString msg = QString("%1 Files").arg(m_playlist->childCount());
+    ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
 }
 
 void k2sendWidget::slotRemoveFiles()
@@ -555,7 +423,6 @@ void k2sendWidget::print(QPainter *p, KPrinter *kp,int height, int width)
             p->drawLine(0,y,width,y);
             y+=h;
         }
-
     }
 }
 
@@ -564,8 +431,18 @@ QString k2sendWidget::currentURL()
     return m_url;
 }
 void k2sendWidget::openURL(const KURL& url){
-    m_url = url.path();
-    m_source->addBranch(url,url.fileName());
+    KFileTreeBranchList branches;
+    KFileTreeBranch * branch;
+    branches = m_source->branches();
+    bool ok = TRUE;
+    for ( branch = branches.first(); branch; branch = branches.next() )
+        if (branch->rootUrl().path() == url.path())
+            ok = FALSE;
+
+    if (ok){
+        m_url = url.path();
+        m_source->addBranch(url,url.fileName());
+    }
 }
 
 void k2sendWidget::openURL(QString url)
@@ -581,6 +458,11 @@ void k2sendWidget::slotOnURL(const QString& url)
 void k2sendWidget::slotSetTitle(const QString& title)
 {
     emit signalChangeCaption(title);
+}
+
+void k2sendWidget::setProgress(int v)
+{
+    m_bar->setProgress(v);
 }
 
 #include "k2sendwidget.moc"

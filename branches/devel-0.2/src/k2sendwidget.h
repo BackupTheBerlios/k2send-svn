@@ -50,10 +50,10 @@ public:
     void configRefresh(QString& addr);
     void customEvent( QCustomEvent * e );
     QString currentURL();
-    virtual void openURL(QString url);
-    virtual void openURL(const KURL& url);
+    void openURL(QString url);
+    void openURL(const KURL& url);
     void print(QPainter *, KPrinter * kp,int height, int width);
-
+    void setProgress(int v);
 
 signals:
     void signalChangeStatusbar(const QString& text);
@@ -70,7 +70,7 @@ public slots:
     virtual void slotConfig();
     virtual void slotConsoleConfig();
     virtual void slotLength();
-    virtual void slotSelectItem( QListViewItem * item,const QPoint&, int);
+    virtual void slotSelectItem( QListViewItem *);
     virtual void slotPlaylistClear();
     virtual void slotConsolePlay();
     virtual void slotConsoleStop();
@@ -82,14 +82,8 @@ private slots:
     void slotSetTitle(const QString& title);
 
 private:
-    bool isDoubleEntry(const QString& file);
-    void readPlaylist();
-    void writePlaylist();
-    void readSourcelist();
-    void writeSourcelist();
     void setIndex();
     void nextIndex();
-    void addDir(const QString & path);
     void setSelected();
 
     K2sendPlayer       * m_player;

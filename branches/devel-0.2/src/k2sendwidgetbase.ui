@@ -54,7 +54,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="KFileTreeView" row="0" column="0" rowspan="5" colspan="1">
+                    <widget class="K2sendSource" row="0" column="0" rowspan="5" colspan="1">
                         <property name="name">
                             <cstring>m_source</cstring>
                         </property>
@@ -678,6 +678,7 @@
     <include location="global" impldecl="in declaration">kfiletreeview.h</include>
     <include location="local" impldecl="in implementation">k2sendplaylist.h</include>
     <include location="local" impldecl="in implementation">k2sendwidgetbase.ui.h</include>
+    <include location="local" impldecl="in implementation">k2sensource.h</include>
 </includes>
 <slots>
     <slot>slotPlay()</slot>
