@@ -1,0 +1,712 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>k2sendWidgetBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>k2sendwidgetbase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>744</width>
+            <height>735</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>640</width>
+            <height>480</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>k2send</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string>K2send</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>tabWidget</cstring>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Player</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="K2sendSource" row="0" column="0" rowspan="5" colspan="1">
+                        <property name="name">
+                            <cstring>m_source</cstring>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Helvetica</family>
+                                <pointsize>9</pointsize>
+                            </font>
+                        </property>
+                    </widget>
+                    <widget class="K2sendPlayList" row="0" column="2" rowspan="5" colspan="1">
+                        <property name="name">
+                            <cstring>m_playlist</cstring>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Helvetica</family>
+                                <pointsize>8</pointsize>
+                            </font>
+                        </property>
+                        <property name="dragEnabled">
+                            <bool>true</bool>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Playlist</string>
+                        </property>
+                    </widget>
+                    <widget class="KPushButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>m_remove</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>32767</width>
+                                <height>60</height>
+                            </size>
+                        </property>
+                        <property name="text">
+                            <string></string>
+                        </property>
+                        <property name="pixmap">
+                            <pixmap>image1</pixmap>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Remove</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Remove from Playlist</string>
+                        </property>
+                    </widget>
+                    <spacer row="3" column="1" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>spacer1</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>183</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QProgressBar" row="5" column="0" rowspan="1" colspan="4">
+                        <property name="name">
+                            <cstring>m_bar</cstring>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Progress</string>
+                        </property>
+                    </widget>
+                    <widget class="QButtonGroup" row="0" column="3" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>buttonGroup1</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>40</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>m_play</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>image2</pixmap>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Play</string>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>m_stop</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>image3</pixmap>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Stop</string>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>m_skip</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>image4</pixmap>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Skip</string>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>m_loudness</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>image5</pixmap>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Loudness</string>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                    <widget class="KPushButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>m_add</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>32767</width>
+                                <height>60</height>
+                            </size>
+                        </property>
+                        <property name="text">
+                            <string></string>
+                        </property>
+                        <property name="pixmap">
+                            <pixmap>image6</pixmap>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Add</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Add Files to Playlist</string>
+                        </property>
+                    </widget>
+                    <widget class="QSlider" row="6" column="0" rowspan="1" colspan="4">
+                        <property name="name">
+                            <cstring>m_length</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                    </widget>
+                    <spacer row="4" column="3">
+                        <property name="name">
+                            <cstring>spacer2</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>230</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QGroupBox" row="2" column="3">
+                        <property name="name">
+                            <cstring>groupBox1</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>40</width>
+                                <height>80</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_playlist_clear</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>10</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image7</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Clear Playlist</string>
+                            </property>
+                        </widget>
+                    </widget>
+                    <widget class="QButtonGroup" row="3" column="3">
+                        <property name="name">
+                            <cstring>buttonGroup2</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>40</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QSlider">
+                                <property name="name">
+                                    <cstring>m_volume</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Volume</string>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Console</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QGroupBox" row="0" column="1">
+                        <property name="name">
+                            <cstring>groupBox1_2</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>40</width>
+                                <height>120</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_console_clear</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>70</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image7</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Clear</string>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_console_play</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>10</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image2</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Configure</string>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_console_stop</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>40</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image3</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Configure</string>
+                            </property>
+                        </widget>
+                    </widget>
+                    <widget class="KTextBrowser" row="0" column="0" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>m_console</cstring>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>400</width>
+                                <height>400</height>
+                            </size>
+                        </property>
+                        <property name="font">
+                            <font>
+                                <family>Terminal [DEC]</family>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                        <property name="text">
+                            <string>Debug Console</string>
+                        </property>
+                    </widget>
+                    <spacer row="1" column="1">
+                        <property name="name">
+                            <cstring>spacer5</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>510</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<customwidgets>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="PNG" length="882">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000033949444154789c6d93cf4b237700c53f99c9248d211a75082198448bd51c426dcdb6154321420f1eb69516b4a01eda83d09bf7827f8317a15ea4b75244dbd24564bd580b823f8a698325d518a3c4749368129390263371e6dbd3ca6ee93bbdc3fbbcd37b165e9734353535190a859e7abdde0f5d2e971f10e572f9369148fcb4b3b3f343b1583c7815b0bc347d7d7d830b0b0bdfc462b18f72b91cb95c8e6ab58a244974777733383888c3e168afaeae7eb7b1b1b108540164009bcd36b4b4b4f42c168bbdbfbbbbcbe9e929b55a0d4dd368369b944a252e2e2e1042c8f3f3f3efd86cb6f78e8e8e9e012d19b02d2e2e7e3f3333f3646b6b0b4dd3e8eaeac26eb7e3703870381c389d4e5c2e17d56a9572b9ccececec9ba954aa339d4e6f5982c1e067ebebeb9b575757dcdcdc60b55a01080683f8fd7edaed36994c8642a1802449689ac6e8e828b55a4d9f9b9bfbc01a8d463f77381c188681aaaa582c168687870987c3288a82a66978bd5e92c9248542018bc542a55221140ad98686863eb60e0c0cbc6b9a269d9d9d98a689dd6ec7ed76532c16314d13d334a9542ab8dd6e0cc378cc0821f0f97c216bb3d9440881aaaa188641abd5e2fcfc1c599601300c035dd7314d135555511405bbdd8eaeeb689a66b52693c93f2a95ca5b81408076bb4da3d1e0f2f29256ab8524490821d0759ddede5e5455459665144521994c92cbe5aea4783cbe1e8fc7d1751d5555e9ebeb2312896018062f5ebc209fcfe3743a191b1bc3e3f1e0f178a8d56a1c1c1c884c26f31ce08dc9c9c95fd7d6d644269311866108d334c5fdfdbd383b3b13e9745a341a0d619aa6d0755d241209b1b2b2222291c88f804d061eaeafaf7f9324e969bd5eef92651997cb85dbeda6b7b797eeee6e6459e6f6f696c3c343f6f6f6d8dedefe6b7f7fff4be0f671ca8aa284a3d1e8b7e170f8494f4f0f5eaf1797cb856118dcdddd91cfe7d1348dfdfdfd5f4e4e4ebe02ce1ea70c609a66b15028fc1e0804be68369b72369b259bcd522a95e8e8e8607c7c9c6c367bbfb9b9f9e94bf8b50280878787bfebf5fa3f3e9f6f2c140ad9272626989e9e66646484e3e3e3bbe5e5e5af1b8dc6f3ff7de3ab5214e56dbfdfff497f7fff90d56a25954a253399cccfc09fffcdfe0b08098b509102653b0000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="805">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002ec49444154789c6d934d685c6518859fefbb7766ee8c77663a93363309a409cd6062c5da8e44682d59d84521da9575e10f284268b3505cba70218882fbaebc1850b428889bbab055b14a0a6dd2262995764a1af2d36827d34c6fe64e72996fe6feb8081d98d803efe6e59cb338e77d054f4071e2a601c1086150805040b0a8fbf59969eb84bb9b2b76094d101fa345ceca682add9769918878dcad18046ab3267cf707ddb73fbb669d5cfd9f4171e2661e212fe7babb86de7939cdf1673452090d00d50a99bde732f9fb160bcb958db85f7efdca976397db06c589791321af170ff60e7df8aa4132ae03305dda02e0c5611380961ff0d5459b8bd3eb5553dd79eeafc9b71e68003d23673ecfe5ba4f7d30662090b82ae0ef6597d3a35d1cec4ff0eb8d1ab18844354386fb62dc5bd712e51ac9578ada25ad78f6ba81163bffdaf1b4914a80ab7cd61fb5383dda05c0a37a8b8d7a0b57f93bd30848c73d6e2c86437e73eb5b1d18891a663a13f779b8196044645b5cb69bfc365b6b87ec6c7bfc7c3b8ba332c858683acdc1633a50c89a92878e47ffbe585b0c90cf4479fbc4be8eda8e1e82f7bf06193110522f4840347d8dd5aa462a693ce92c3a70640084d8495f104a1d82c59a1b52aaeea5f40be4b221cff7efb43bb70c732b9d06f32ba04b68788a68e0aee9ba5f9ff1d4664d8a7c1a011f7d1ff0c51b9243fb05470660f2cfc7a2105d0b90020c1d9c86bd9df54b73da3fb3dfb47a5f78b73b191747fbb201e9986266a1c1d3bd3a7b531a6387e1da6d9bae44838ca1d86328ea8e8daaddffe9809cfa5102e8befd69a5525e8c060ef964837cb2c1f93f36582a2b96caaabdcb271b440387cafa83b59c77f51c506d9ff24be317069b919e4b870be903c3fb4d84e87813c230a4b4bac5fc82bd966f4d9dc98b3b539665391dacd1f7beeb7123fd9f24124fbd39908b9a7b92310036eb8ae572735bb9f6859c77f55c4e5bba65599603bbbe11607c7c3c7adf7bb6d7d1068f09a91704a11481bb96f54b73ddfacabf40d5b2ace663fe7fb12934dc81620a430000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="774">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002cd49444154789c6d9351685b5518c77fe7dc939b9b2ced6dd29aa4c56ea3c9eca62825d0973986b807a13211441ff65210cab687fab4c7e104712fe2d3f6e48541710e0411a47b1a087b983237b51d8a46b6e2da95354b8c496eda4bef4dcebd7b88eb58970fbea7effffbf31dfee713f4a9d2e93b1684d34461112201e18ad2eddbb79c63de6eadd805a6409cc5889d92e6a03d9eee908c75f9bb6a11facd96d0de374a373efbd9796bed3983d2e93b7984bc9ecb0e4fcebe6973e490c160d200c0ef44fc76cfe3d20f9bdcbd5ffd37a12beffff8e5cc7500a3072fa710f2a7d2cb63931f7fb087425e31fe429c335724a57d1d3a3a62c456bcf1aa85bb6d24cb1be2f881d78e7eb5baf4dda601303a7df27c2e973dfed18c8540e2f921a3c326335370f65bc564d6c7f343fc20e2e0789c7b8f8c64a5c5c0db25e39a513af58b8511bff2de11db1a4c82e76b3c5f531c4b00303305e7af9abc686ff566db2176a2cbaf2bd1a40e362f2b60dab452763aa1a935c37ea1706116e617d21c4a6f70f5cf0cae9f46c6a3941b140e2ba09849496a6e1743080cd9d7830bb3f0eee743b4833800326621a42a2a4004da60ad6e602a81a90435cfea6b329e4d505f05217af10922a9205c697911e5fac88e30ea03cf2fc0f2ffb02160bbeb6386deba54ba7d5bfbcd96142065af773f637e01fe781061c5348998c6529a70bbb195d1e52579cb39e609ed5d927e85bd83ee4e3fa92fbe6f13780d5e1a6e3231e4b2df76917e8558b7b69855ab0f1580d28d4fab55f9cec4c84821639b3bf0b9cb1b00e4079e6ef35f2ba0faa8b63ed6bd791183face577e7d6eb110c446af4d15ed89837b5308f1cc99104511e5b54d96ef36d6f39d1b27f3e2af1b8ee3b8cfa88e7ef8f5a817dbf74932b9e7c4fe9c991a1ae845d66cfbdcaf045bbed758cc756f5ecc19fffcee388e0bbbae11606e6ece7cd07d65cc350a87855445412445e8ad67747929ab561f0275c7718227fac7080019ff3db9ffa50000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+        <data format="PNG" length="668">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000026349444154789c8d934d4814611cc69ff79d77c6d96d74735df68bbe7017cca4a80d2ff641d441888808bad8a18886f42054e70e4244b70ee5a9216f51de024f06868481a9a4d2c14d93fc58fcd875dbddd975d899dd77a6831fa0add603efedf93dffffff8197a082621d93326037c3b1a38043007b96f1fce88876c5d8ed25bb4005204f2088ed54aaf11cae2dc12d96f12329c336b339c28d5ec633cfbe6aad0b7f05c43a2683207430e0af6bb873d983f38d026adc0200c02c39f8f6d340cf40013373c935175fb9f5e5f5d5c1ed8058c7840242c76227c20d0fafc9a876b14a97a1c46dbce9cfa07f6435ad9853273ff7dc5ede743a5d01bfafe1ee25119fc6f58af0966eb6d4603e65d74dcf1a5daaaa76b258fb980c2ade6f3d23a150e40080ce1ba18af0ab0fcb58cb9570a191203ee7695bb49a9e3300cd92ac786a5d1ca9acbdef74007839e0866ed68256398a6e455a1880a857a148e965088440a07bc3bd932190cddaa928835016650088c5052ca405488c406264ef844d11b2d13e81431960cfe60c07f1b4ef9fe0162c10a0583621d94682329e1fe56636470940e9c6db4f2e9143661c7631b3eee5f171020067db475e0482e14787fceeffda229134905e9a7e7fca79f7980100e399a7c924bd5eeff345bc1e695ff877ce42723595089787bb2120bdddd839b52f6289a18fa7a39efae3471410b2b34cc771105f28606226930896861e04c9d490a669fa0ed7c57b6f438678b4cbed3ed0762c202907abab0000d9bc89b9156bdd34327d81f2707740f8f55dd3341dd8f51b0140555569b1dc14d685480ba12c4ae050621b092f8f8ffbd9fc1280b4a669d696ff0fa698e67f99dfd0e60000000049454e44ae426082</data>
+    </image>
+    <image name="image4">
+        <data format="PNG" length="759">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002be49444154789c7d934d68545718869f73ce9d993b3fce9889ce2401d360466223957634282a529a8590e2aab414110ac2a02eeaa69b2e4a71a374d35d57bd20b46aa11ba1040a2a011756a2b1cdd81f3aa241139374748c337367bce4dedc73af8bd0d489d217cee281f7fde07c3f82d7a878f28e09c10861508050403063e8d6d42d6bd459ef15eb8229105fa0222764349dd9d2b54222e273f78949e0369a423b3f1aba7ee6a67568ee9502c593777a10f25a3ed73df4c97b190ebca948271400ee4ac86ff71dce4db4b9f7f0c9d3b8ae7ef8cbb763d700d46ab89c42c81bc5e1bea12f3f4ab25073e8cfc558f64296bd908972935ddb92bcfb9689bdac12957fc4e16d3b0f9e9f9dbed45600bd23c7cfe6f3b9c3a7c64c049243bb37323e5927692a1c3758e374dc60fb9618f71fab44b5c986f78bea8a2a9eb86da2623f7c702063a613e0b89a425f9c9d5b934c949b20c24e0632719f5f67c221edb52f18c048d44c65bae29a5a23e8e8f0d1d1cd5c98a875f0d8572eb6db858c8529db1bdc2781423625a9d93e4f9b3ef596ff4a9197f5f3e7310064c44448a32001e169c5dc9262a1a1a8dac6eb56a343ef0cac8e4f104a09c14cd309a92c6de2f7c7dddc5ec876983ffdae337cea7bf8f31168df4504cebc34746b4abb8da61420e5ea7b395c9efd8f3fbba8b9bba8310d4db05c7f9ed5956979cb1a758476ce49b74a7fdaa63f6d03f0f54f2d3ca7cef0e6fa1ab76d9b818c8d74ab44fcda78ce985d14007b4a97bb74a47b6aeff0a6c16c26fabfff7fd6f498fcab36dfe75efd38af1e4cadadf2fed2f8a017e9bdf27621b3757b7f0a213ace84300ca9ccb529dfabcff7ac5c3fde23febe6e5996dde13a78ec62af1379e37422913c32908fa6366e581d59a3e5f2b0ea3d779dfa78de9ffc26af1efc6159960debae11a0542a451ff93bfa6c35b84f48a32008a5089cf9acae4ce78cd94560c9b22cef5fff0b71f921d58f7125990000000049454e44ae426082</data>
+    </image>
+    <image name="image5">
+        <data format="PNG" length="575">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000020649444154789c9592cf6a13511c85bf3433f93375c8d8040b8db523a1496ba5c692598a295dba497d819acdacf50d74eb23a460a9202e040d82202edd66a0c12e8ad1d26221b611ec343133493ad371d1b4a621047be1c0fdc139dfe5de7361c832746dc7d0b59d619e9121e174744153a30b9a6ae85af6d20060459999257a3b09b0726980203a392511474edc22288b3943d794ff0618ba968e4c27549c26b4f689ce5c5780dc20afcfd0b54780da9d2340da2f3ae9c4c32545be710d80ced11f2aaf3f9aed8657eecbeffabe3c9ef726efc5f08f46418820c7ea2044408c80e7757ddea9ec1fe77bd7b6d97c5563a46305f33f4b26d2581539de845010841678fb40575e57a100041c5cfb1b95f707b8c7febcaf7be79c3fe0ac251f7c55a471118431f009ff4ef700cf06b78175e050f99032dd8e90cf144a455fefc30921e7ddd4d2aeaa240e073663fd92a8bc4d996e5b58cc144ae50b2d640aa5b2d312166b9be3203150477b5771dbc293b3f0a01ad570dc8230a7f2012ee7f395e93ac09dde403f202b271be7e14e4dc4aa86c0064220cf36a0ef3ff403eecb73753881dae7285b2f53bb5beb33c5ed3753b80d3f0440993f540d5d530702a4492bcb096cafdf64ef935a748ec377332fcacbe6f7d8f2e6f339d3dc8820271b00d9b3cc8516a489e646fbb768bab698cfac1ac55eb8a16b0adec99a3461e5aceae8b3ccaaf114e02f9b54c1796c3ed1b10000000049454e44ae426082</data>
+    </image>
+    <image name="image6">
+        <data format="PNG" length="807">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002ee49444154789c7d93cd6f147518c73fbfdfccecced6e92ebb94b2a5d836505dc554a484680a898693d19e04ced54323989878303d79e0e23f608c978d18136d301a3d08078c264de30568b712822db6abed76d36d29ebee4ebbe3bc8f87b1eb4b884ff21c9e97cff7f07cf3081e11a397eee8109e220a8721121096d560e7f671ae5ac562f15fbbe23fa001e23d14eda24ca4338f673dba349ffb0f7442a7d91281f5851a34de7f96af2a7b42e21f701e21670ef6ee2f4c9ccd70e6698574970280e34594562caefcb0cbf2ea8387a960f3c2b1e89b9962b1180b8c5efac940c8b9d163870aef8ceb74a754006e2efb003cff445c7b41c8c7371adcb8b555379cc5918232538b2744970ff6f6145e7f49c371c17163f0c2e9c700989e6df3545fbcf9da589ab5ed70ff2f65eb32216f2ba317e77494e4f4b933193ddd05961374326ba87425154606137c77c7410a0fcb0ec9a47ce6cb512170773f53815309ddc86453012b1b11ad3ffebeeb7cd9e4dce934857e8d89b3dd7c74bdc9b5bb294c278b4c4686e91e1d5381e19c21d9367dc65f3840a15f7b94b300bcf5ea3e161fc2c22a484d4748755802c20d142a75e57fe18e5b4320446c9f20922a84e59615b154efe1ddcf43460644c7dd3084e786e0c4600c2facc127b3a04ab07d874468555535d8b9ed3bcd9614f9ccbd6ac4bd6a0480ed2b8c1c86375e8ce1bbeb1153d321290d2460da8d762e585a90c7b96a89c0ba229d4d06d266279fcc35f8602286976b1e1f5e6b72649fc950c6443a9b68fef6b7bdeada86522a95183871fed6ae1d9e1fec517207d21146d2c748fa1cc92769b5033efdbedee9b9b6c5fddfb6aa7ddeec94219b2b0ac02b27537623ecbf5ef95d193774993ddc932495902c566c162b36ba2648aab05a6b33bf54aff6793fbe9997cb7380a500944a255e3e69345a5ef797eb0db5fbd74db7603b6ec2f6429abb2eabb51d6efedc6a6fd4b6bece7bb3537fc166e717f66272721220b1ee3f73c8548e8e09a90e0b222942ab9a0b96167ad5b50da00eb87bdff827c8854a566b0cd1ac0000000049454e44ae426082</data>
+    </image>
+    <image name="image7">
+        <data format="PNG" length="852">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000031b49444154789c6d93cb6b5c6518c67fdf77be9939339d4b6626e4a68936094643359010af5d48a15a8add44942e0a2e44da6e5cba1277fa27b8192c2e8a4494d94817b6148c97aa649a9a45256692d836b749a6676e67e6f45ce69ce322a28cf8c20befe2fd3def030fafe07f6af6f2aa0ec13c613009a180605379466946163b8542a16757fc074c82f8102d724946d399d1ac4722d2e58f439dc06934856f7da9fcdac7c7cdcfb7171717c31e81d9cbab4308f9dde0407eea9d53194e3ea3914e6800385ec8ca86c5959b6dcaf70e1fc6fdfdb7061f7eb6542c1643ed08fe2d8990b766a747a63e7afb1813430acb76d93b34b13d0842c1405f84579fd569d95a626d5f9cebaafcd5b971616a00c3f3173f191c1c38f7fe591d81c4341bf4a734a68ee751a24bcdf4311f85386ec8d3a331360eb444a52552e3f1f5ebdaeca5928e16fbe2cd93193d9d80186d9e3f31422aa90310d7a334ac805dc3c1727c2c3b2013ef727b339cf2ddf65505cc47f564261bf7a91a1d5e7f6d8c200cb95e6ab05d7548c424b61b128b4a72298d9f368fb1b49e45c6c264cb9d78590193b9a4a4daeaf2d4700c80d52d8bf2ae7de440b6991ecdf0d2893c009547b0b40e32a223a49a5480707d8d0786c6702e02c0764d71b3dcc72be36d2e9c19efc9dd0f4284100840104a09c166d30a5933faf979f328b6d3cf2946728a95dd3e6a4dbb47e0a0e6a224f85d0711583b4a7946a9eb249a520c65368c2437561d4ecfc4f8f45d8d43a3452e93ee11a8991eba52b4ec7a27e7afdd9133b2d811be75453a15c6d22dbebe65716dd9c4760306f269bc6ec80f772d760d0fdb0df01c1be9548874abdf0ca8fb7b02e085f7becdfa91fcf28bd3fd13b94cf49f6b510d5cff680e8290881254eb2ebfdcadee8c3837ce0f6a7f2e6b0067e7e2763d78ecda839af6465297d9c7fb63c4a3928812e8917f7b6bafc3ed356367d8fbf1e2902c97004b03585959e1cc5cb2def4525f6dd7556aabe24ed98e1bb5bd8046dbe5debec9afbf373b7bfb07c521effb0ffe865b8542a1f71b171616c866b3d16d7762ac2d9f382554e249a1c55c11583b397fed4e5f50ae9aa669009d62b108c05f1802603d230b8b9b0000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>m_add</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotAddFiles()</slot>
+    </connection>
+    <connection>
+        <sender>m_console_clear</sender>
+        <signal>released()</signal>
+        <receiver>m_console</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>m_length</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotLength()</slot>
+    </connection>
+    <connection>
+        <sender>m_length</sender>
+        <signal>sliderPressed()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotLengthPressed()</slot>
+    </connection>
+    <connection>
+        <sender>m_loudness</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotLoudness()</slot>
+    </connection>
+    <connection>
+        <sender>m_play</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotPlay()</slot>
+    </connection>
+    <connection>
+        <sender>m_playlist_clear</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotPlaylistClear()</slot>
+    </connection>
+    <connection>
+        <sender>m_remove</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotRemoveFiles()</slot>
+    </connection>
+    <connection>
+        <sender>m_skip</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotSkip()</slot>
+    </connection>
+    <connection>
+        <sender>m_stop</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotStop()</slot>
+    </connection>
+    <connection>
+        <sender>m_console_play</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotConsolePlay()</slot>
+    </connection>
+    <connection>
+        <sender>m_volume</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotVolume()</slot>
+    </connection>
+    <connection>
+        <sender>m_console_stop</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotConsoleStop()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in declaration">kfiletreeview.h</include>
+    <include location="local" impldecl="in implementation">k2sendplaylist.h</include>
+    <include location="local" impldecl="in implementation">k2sendwidgetbase.ui.h</include>
+    <include location="local" impldecl="in implementation">k2sendsource.h</include>
+</includes>
+<slots>
+    <slot>slotPlay()</slot>
+    <slot>slotStop()</slot>
+    <slot>slotSkip()</slot>
+    <slot>slotLoudness()</slot>
+    <slot>slotVolume()</slot>
+    <slot>slotAddFiles()</slot>
+    <slot>slotRemoveFiles()</slot>
+    <slot>slotConfig()</slot>
+    <slot>slotConsoleConfig()</slot>
+    <slot>slotConsoleStop()</slot>
+    <slot>slotConsolePlay()</slot>
+    <slot>slotConsoleClear()</slot>
+    <slot>slotLength()</slot>
+    <slot>slotLengthPressed()</slot>
+    <slot>slotPlaylistClear()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klistview.h</includehint>
+    <includehint>klistview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>ktextbrowser.h</includehint>
+</includehints>
+</UI>

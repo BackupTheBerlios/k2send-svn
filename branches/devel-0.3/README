@@ -1,0 +1,108 @@
+k2end README
+=============
+
+k2send - a kde gui for the BlueMP3 player
+
+
+    * Playlist support
+
+    * BlueMP3 remote controll to play mp3 files
+
+    * Debug console for BlueMP3 sio output
+
+    * Loundness support for patched firmware
+
+    * Device scanning
+
+    * M3u playlist import
+
+
+This is the intial alpha release of k2send, so don't expect everything
+to work 100% with your setup,so bugreports and patches are welcome.
+contact me at d.voswinkel@netcologne.de
+
+
+
+--------------------------------------------------------------------------------
+DEPENDENCIES
+============
+
+required hardware
+
+    * BlueMP3 player
+      http://www.bluemp3.de/
+
+    * Bluetooth dongle
+
+
+optional hardware
+
+    * Serial cable for debugging
+
+
+required libs
+
+    * KDELIBS 3.2
+      http://www.kde.org
+
+    * TagLib 1.0
+      http://freshmeat.net/projects/taglib
+
+    * bluez-libs 2.5
+      http://bluez.sourceforge.net/
+
+optional software
+
+    * patched firmware with loundess support
+      http://k2send.berlios.de/
+
+Please note, if you obtain these dependencies via a packaging system, you must
+also install the devel versions of these packages!
+
+
+--------------------------------------------------------------------------------
+IMPORTANT INSTALL INSTRUCTIONS
+==============================
+
+In order to compile and install amaroK on your system, type the following in the
+base directory of the amaroK distribution:
+
+
+                % ./configure --prefix=`kde-config --prefix`
+                % make
+                % make install
+
+
+--------------------------------------------------------------------------------
+MINI-FAQ
+========
+
+Q: I cannot connect to BlueMP3 ?
+A: You have to set bluetooth address first,
+   Go to configuration dialog, start scanning for devices,
+   afterwards select BlueMP3 baddr.
+
+Q: I connected the serial cable, but i don't see any debug log ?
+A: Go to configuration dialog and set correct tty device and ensure that your
+   user has read permission to the device. Afterwards restart the debug
+   poller by clicking the play button within the concole tab context.
+   If this doesn't help, please check first if would work with kermit.
+
+
+Q: I get connection to the player, but the songs don't start playing ?
+A: This could have many reason, please enable debug output for
+   k2send by adding 1 line to $KDEDIR/share/config/kdebug.areas.
+
+   200010      k2send
+
+   After restarting k2send you should see some more information about
+   whats happing.if don't get further with this, please send me the dump
+   with some addtional information about your setup.
+
+
+
+--------------------------------------------------------------------------------
+
+
+WWW : http://k2send.berlios.de/
+
