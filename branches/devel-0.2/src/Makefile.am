@@ -20,9 +20,9 @@ KDE_ICON = k2send
 bin_PROGRAMS = k2send
 
 # the application source, library search path, and link libraries
-k2send_SOURCES = main.cpp k2send.cpp k2sendwidget.cpp k2sendwidgetbase.ui k2sendplayer.cpp k2sendplaylistitem.cpp k2sendplaylistitem.h k2sendconsole.cpp k2sendconsole.h
+k2send_SOURCES = main.cpp k2send.cpp k2sendwidget.cpp k2sendwidgetbase.ui k2sendplayer.cpp k2sendplaylistitem.cpp k2sendplaylistitem.h k2sendconsole.cpp k2sendconsole.h k2sendplaylist.cpp k2sendplaylist.h pref.cpp 
 k2send_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-k2send_LDADD = $(LIB_KDEUI) -lkio 
+k2send_LDADD = $(LIB_KDEUI) $(LIB_KFILE) $(LIB_KDEPRINT)  
 
 # this is where the desktop file will go 
 shelldesktopdir   = $(kde_appsdir)/Utilities

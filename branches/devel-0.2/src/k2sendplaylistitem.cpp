@@ -36,13 +36,17 @@
 
 #include <qlistview.h>
 #include <qfileinfo.h>
-
+#include <qpainter.h>
+#include <qpalette.h>
+#include <qobject.h>
 
 #include "k2sendplaylistitem.h"
 
 int K2sendPlayListItem::_id=0;
 
-K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) : QListViewItem(p) , filename(fn)
+
+K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) :
+                    QListViewItem(p) , filename(fn) ,_playing(FALSE) , _tag("k2sendtag")
 {
 
     QString length;
@@ -50,6 +54,8 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) : QListViewI
     _id++;
     _my_id = _id;
     _valid = TRUE;
+    c = 0;
+    dir = 0;
     TagLib::MPEG::File mp3file(filename.latin1());
 
     if(!mp3file.tag() || !mp3file.isValid()){
@@ -57,15 +63,18 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) : QListViewI
          _valid = FALSE;
          return;
     }
+    QString str_id;
+    str_id.sprintf("%03i",p->childCount());
+    setText(0,str_id);
 
     if (!mp3file.tag()->title().isEmpty()){
-        this->setText(0,mp3file.tag()->title().toCString());
-        this->setText(1,mp3file.tag()->album().toCString());
-        this->setText(2,mp3file.tag()->artist().toCString());
+        setText(1,mp3file.tag()->title().toCString());
+        setText(2,mp3file.tag()->album().toCString());
+        setText(3,mp3file.tag()->artist().toCString());
 
     } else {
         QFileInfo info(filename);
-        this->setText(0,info.baseName());
+        setText(1,info.baseName());
 
     }
     int len = mp3file.audioProperties()->length();
@@ -77,12 +86,40 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) : QListViewI
         return;
     }
     rate.sprintf("%i", mp3file.audioProperties()->bitrate());
-    this->setText(3,length);
-    this->setText(4,rate);
+    setText(4,length);
+    setText(5,rate);
+    //startTimer(100);
+}
+
+
+// void K2sendPlayListItem::timerEvent( QTimerEvent *e ){
+//     if (dir){
+//         c = c + 15;
+//         if (c >=255)
+//             dir = !dir;
+//     } else {
+//         c = c - 15;
+//         if (c <= 0)
+//             dir = !dir;
+//     }
+// }
+//
+
+void K2sendPlayListItem::paintCell( QPainter *p, const QColorGroup &cg,
+                                 int column, int width, int alignment )
+{
+    QColorGroup _cg( cg );
+    QColor c = _cg.text();
+
+    if (_playing)
+        _cg.setColor( QColorGroup::Text, Qt::red );
+
+    QListViewItem::paintCell( p, _cg, column, width, alignment );
+
+    _cg.setColor( QColorGroup::Text, c );
 }
 
 K2sendPlayListItem::~K2sendPlayListItem(){
-
 
 }
 

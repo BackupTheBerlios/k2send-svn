@@ -42,6 +42,9 @@ class K2sendConsole : public QThread {
         QString & tty()  { return tty_dev; }
         virtual void run();
         void restart();
+        void stop();
+        void clear();
+
     private:
         QString   tty_dev;
         k2sendWidget  * m_parent;

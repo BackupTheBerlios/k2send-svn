@@ -62,14 +62,19 @@ K2sendConsole::~K2sendConsole()
 void K2sendConsole::run()
 {
     K2sendStatusEvent * se;
+    fd_set            readfds;
+    struct timeval    tv;
+    int rc;
     while(running()){
         QFileInfo  info(tty_dev);
         if (!info.isReadable()){
             QString msg = QString("Cannot read from " + tty_dev) ;
             se = new K2sendStatusEvent(K2sendStatusEvent::EventMessage,msg,2000);
             QApplication::postEvent( m_parent, se );
-            terminate();
-            wait();
+            kdDebug(200010) << "K2sendConsole::run terminate" << endl;
+/*            terminate();
+            wait();*/
+            return;
 
         } else {
             char buffer[128];
@@ -77,9 +82,11 @@ void K2sendConsole::run()
             if (!fd) {
                 QString msg = QString("Cannot open " + tty_dev) ;
                 se = new K2sendStatusEvent(K2sendStatusEvent::EventMessage,msg,2000);
-                 QApplication::postEvent(m_parent, se );
-                terminate();
-                wait();
+                QApplication::postEvent(m_parent, se );
+                kdDebug(200010) << "K2sendConsole::run terminate" << endl;
+/*                terminate();
+                wait();*/
+                return;
             }
             fcntl( fd, F_SETFL, 0 );
             struct termios options;
@@ -104,14 +111,26 @@ void K2sendConsole::run()
             options.c_cc[VTIME] = 10;
             int len;
             while (running()){
-                    len = read(fd,buffer,128);
-                    buffer[len] = 0;
-                    if (len && buffer[0] != '\n'){
-                        se = new K2sendStatusEvent(K2sendStatusEvent::EventConsole,buffer);
-                        QApplication::postEvent( m_parent, se );
-                    } else {
-                        this->msleep(100);
+                FD_ZERO(&readfds);
+                FD_SET(fd, &readfds );
+                tv.tv_sec=1;
+                tv.tv_usec=0;
+                rc = select(fd+1, &readfds, NULL, NULL, &tv);
+                if (rc>0){
+                    if (FD_ISSET(fd, &readfds)) {
+                        len = read(fd,buffer,128);
+                        buffer[len] = 0;
+                        if (len && buffer[0] != '\n'){
+                            se = new K2sendStatusEvent(K2sendStatusEvent::EventConsole,buffer);
+                            QApplication::postEvent( m_parent, se );
+                         }
                     }
+                } else if(!rc){
+                    this->msleep(100);
+                } else {
+                    kdDebug(200010) << "K2sendConsole::run select error " << tty_dev << endl;
+                }
+
              }
              close(fd);
         }
@@ -120,16 +139,27 @@ void K2sendConsole::run()
 
 void K2sendConsole::setTty(QString & str){
     tty_dev = str ;
-    restart();
+    kdDebug(200010) << "K2sendConsole::setTty " << tty_dev << endl;
 }
 
 void K2sendConsole::restart(){
 
     if (running()){
-        kdDebug(200010) << "K2sendConsole::restart restarting thread " << tty_dev << endl;
+        kdDebug(200010) << "K2sendConsole::restart stop thread " << tty_dev << endl;
         terminate();
         wait();
-        start();
+    }
+    kdDebug(200010) << "K2sendConsole::restart start thread " << tty_dev << endl;
+    start();
+
+}
+
+void K2sendConsole::stop(){
+
+    if (running()){
+        kdDebug(200010) << "K2sendConsole::stop " << tty_dev << endl;
+        terminate();
+        wait();
     }
 }
 

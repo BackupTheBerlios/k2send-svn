@@ -27,18 +27,19 @@
 
 #include "k2send.h"
 #include <kapplication.h>
+#include <dcopclient.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 
 static const char description[] =
-    I18N_NOOP("K2send");
+    I18N_NOOP("Kde gui for the BlueMP3 player");
 
-static const char version[] = "0.1";
+static const char version[] = "0.2";
 
 static KCmdLineOptions options[] =
 {
-//    { "+[URL]", I18N_NOOP( "Document to open." ), 0 },
+    { "+[URL]", I18N_NOOP( "Document to open." ), 0 },
     KCmdLineLastOption
 };
 
@@ -48,10 +49,13 @@ int main(int argc, char **argv)
                      KAboutData::License_GPL, "(C) 2004 David Voswinkel", 0, 0, "d.voswinkel@netcologne.de");
     about.addAuthor( "David Voswinkel", 0, "d.voswinkel@netcologne.de" );
     KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions( options );
+    KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
-    k2send *mainWin = 0;
 
+    // register ourselves as a dcop client
+    app.dcopClient()->registerAs(app.name(), false);
+
+    // see if we are starting with session management
     if (app.isRestored())
     {
         RESTORE(k2send);
@@ -60,17 +64,24 @@ int main(int argc, char **argv)
     {
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-
-        /// @todo do something with the command line args here
-
-        mainWin = new k2send();
-        app.setMainWidget( mainWin );
-        mainWin->show();
-
+        if (args->count() == 0)
+        {
+            k2send *widget = new k2send;
+            widget->show();
+        }
+        else
+        {
+            int i = 0;
+            for (; i < args->count(); i++)
+            {
+                k2send *widget = new k2send;
+                widget->show();
+                widget->load(args->url(i));
+            }
+        }
         args->clear();
     }
 
-    // mainWin has WDestructiveClose flag by default, so it will delete itself.
     return app.exec();
 }
 

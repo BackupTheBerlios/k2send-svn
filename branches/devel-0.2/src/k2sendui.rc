@@ -1,8 +1,25 @@
+
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <kpartgui name="k2send" version="1">
 <MenuBar>
-  <Menu name="custom"><text>C&amp;ustom</text>
-    <Action name="custom_action" />
+
+  <Menu name="player"><text>&amp;Player</text>
+    <Action name="player_play" />
+    <Action name="player_stop" />
+    <Action name="player_next" />
+    <Separator/>
+    <Action name="player_loudness" />
+  </Menu>
+
+  <Menu name="playlist"><text>Play&amp;list</text>
+    <Action name="playlist_clear" />
+  </Menu>
+  <Menu name="console"><text>&amp;Console</text>
+    <Action name="console_play" />
+    <Action name="console_stop" />
+    <Action name="console_clear" />
   </Menu>
 </MenuBar>
 </kpartgui>
+
+
