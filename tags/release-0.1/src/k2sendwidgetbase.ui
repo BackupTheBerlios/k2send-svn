@@ -704,6 +704,12 @@
         <receiver>k2sendwidgetbase</receiver>
         <slot>slotConsolePlay()</slot>
     </connection>
+    <connection>
+        <sender>m_volume</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotVolume()</slot>
+    </connection>
 </connections>
 <includes>
     <include location="global" impldecl="in declaration">kfiletreeview.h</include>

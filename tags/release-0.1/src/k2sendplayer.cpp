@@ -578,6 +578,8 @@ bool K2sendPlayer::bluePlay(QString * filename) {
                     break;
                 case K2sendPlayerCommand::Play:
                     bytes_done = 0;
+                    stop = TRUE;
+                    addCommand(cmd);
                     break;
                 case K2sendPlayerCommand::Stop:
                     stop = TRUE;
@@ -586,7 +588,7 @@ bool K2sendPlayer::bluePlay(QString * filename) {
                     break;
                 case K2sendPlayerCommand::Skip:
                     stop = TRUE;
-					addCommand(cmd);
+                    addCommand(cmd);
                     break;
 
                 case K2sendPlayerCommand::Length:
@@ -612,9 +614,13 @@ bool K2sendPlayer::bluePlay(QString * filename) {
     this->clearStatus();
     /* keep playing */
     if (!stop){
+        kdDebug(200010) << "K2sendPlayer::bluePlay keep playing"  <<  endl;
+        se = new K2sendStatusEvent(K2sendStatusEvent::EventSkip,0,0);
+        QApplication::postEvent( m_parent, se );
         new_cmd = new K2sendPlayerCommand(K2sendPlayerCommand::Play,0);
         addCommand(new_cmd);
     }
+    kdDebug(200010) << "K2sendPlayer::bluePlay done"  <<  endl;
     return TRUE;
 }
 
