@@ -387,7 +387,7 @@ k2sendWidget::print (QPainter * p, KPrinter * kp, int height, int width)
     p->setPen (Qt::black);
     p->setFont (m_playlist->font ());
     list.append ("Id");
-    list.append ("Tile");
+    list.append ("Title");
     list.append ("Album");
     list.append ("Artist");
     list.append ("Length");
