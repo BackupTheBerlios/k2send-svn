@@ -84,7 +84,7 @@ k2send::k2send()
     KPopupMenu * pop = trayicon->contextMenu() ;
     pop->insertItem(DesktopIcon( "player_play", 16 ), "Play",  m_view, SLOT(slotPlay()), CTRL+Key_P ,1,1);
     pop->insertItem(DesktopIcon( "player_stop", 16 ), "Stop",  m_view, SLOT(slotStop()), CTRL+Key_S ,2,2);
-    pop->insertItem(DesktopIcon( "player_fwd", 16 ), "Next",  m_view, SLOT(slotNext()), CTRL+Key_N ,3,3);
+    pop->insertItem(DesktopIcon( "player_fwd", 16 ), "Next",  m_view, SLOT(slotSkip()), CTRL+Key_N ,3,3);
     pop->insertItem( "Loundess",  m_view, SLOT(slotLoudness()), CTRL+Key_L ,4,4);
 
     connect(m_view, SIGNAL(signalChangeStatusbar(const QString&)),
