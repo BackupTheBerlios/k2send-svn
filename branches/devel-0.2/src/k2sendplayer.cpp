@@ -585,6 +585,7 @@ bool K2sendPlayer::bluePlay(QString * filename) {
                     addCommand(cmd);
                     break;
                 case K2sendPlayerCommand::Skip:
+                    stop = TRUE;
                     addCommand(cmd);
                     break;
 
