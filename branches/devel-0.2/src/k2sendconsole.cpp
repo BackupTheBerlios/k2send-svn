@@ -113,7 +113,7 @@ void K2sendConsole::run()
             while (running()){
                 FD_ZERO(&readfds);
                 FD_SET(fd, &readfds );
-                tv.tv_sec=1;
+                tv.tv_sec=0;
                 tv.tv_usec=0;
                 rc = select(fd+1, &readfds, NULL, NULL, &tv);
                 if (rc>0){
@@ -129,6 +129,7 @@ void K2sendConsole::run()
                     this->msleep(100);
                 } else {
                     kdDebug(200010) << "K2sendConsole::run select error " << tty_dev << endl;
+                    this->sleep(1);
                 }
 
              }

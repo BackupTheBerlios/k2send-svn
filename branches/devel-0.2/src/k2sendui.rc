@@ -20,6 +20,12 @@
     <Action name="console_clear" />
   </Menu>
 </MenuBar>
+<ToolBar name="mainToolBar" newline="true" fullwidth="true">
+  <text>Main Toolbar</text>
+  <Separator/>
+  <Action name="preferences"/>
+  <Action name="help_whats_this"/>
+</ToolBar>
 </kpartgui>
 
 

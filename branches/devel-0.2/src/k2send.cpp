@@ -82,6 +82,7 @@ k2send::k2send()
 
 k2send::~k2send()
 {
+    delete m_view;
 }
 
 void k2send::setupActions()
@@ -101,7 +102,7 @@ void k2send::setupActions()
 
     KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
     KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-    KStdAction::preferences(this, SLOT(optionsPreferences()), actionCollection());
+    KStdAction::preferences(this, SLOT(optionsPreferences()), actionCollection(),"preferences");
 
     action = new KAction(i18n("Play"), "player_play", cut, m_view, SLOT(slotPlay()), actionCollection(), "player_play");
     action = new KAction(i18n("Stop"), "player_stop", cut,m_view, SLOT(slotStop()), actionCollection(), "player_stop");

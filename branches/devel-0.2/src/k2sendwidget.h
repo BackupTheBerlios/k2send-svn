@@ -85,6 +85,8 @@ private:
     bool isDoubleEntry(const QString& file);
     void readPlaylist();
     void writePlaylist();
+    void readSourcelist();
+    void writeSourcelist();
     void setIndex();
     void nextIndex();
     void addDir(const QString & path);

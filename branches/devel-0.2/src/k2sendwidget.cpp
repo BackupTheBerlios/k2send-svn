@@ -50,6 +50,7 @@
 #include <kdebug.h>
 #include <ktextbrowser.h>
 #include <kprinter.h>
+#include <kfiletreebranch.h>
 
 #include "k2sendwidget.h"
 #include "k2sendplaylist.h"
@@ -68,13 +69,8 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
     m_console->setTextFormat(QTextEdit::PlainText);
     m_source->setShowFolderOpenPixmap(TRUE);
     m_source->addColumn("File");
-    m_source->addBranch(KURL(user.homeDir()),"Home");
+    //m_source->addBranch(KURL(user.homeDir()),"Home");
     m_source->setDragEnabled(TRUE);
-
-    m_config->setGroup("source");
-    QString url = m_config->readPathEntry("lastURL");
-    if (!url.isEmpty())
-        this->openURL(KURL(url));
 
     m_config->setGroup("player");
     int volume    = m_config->readNumEntry ("volume",50);
@@ -94,6 +90,7 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
     m_volume->setValue(volume);
 
     readPlaylist();
+    readSourcelist();
 
     connect( m_playlist, SIGNAL(doubleClicked ( QListViewItem * ,const QPoint&, int) ),
         this, SLOT( slotSelectItem( QListViewItem * ,const QPoint&, int) ) );
@@ -101,15 +98,12 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
 
 k2sendWidget::~k2sendWidget()
 {
-    m_config->setGroup("source");
-    if (!m_url.isEmpty()) {
-        m_config->writeEntry("lastURL", m_url);
-    }
     m_config->setGroup("player");
     m_config->writeEntry ("volume",m_player->currentVolume());
     m_config->writeEntry ("loud_filt",m_player->currentLoundness());
     m_config->sync();
     writePlaylist();
+    writeSourcelist();
     kdDebug(200010) << "k2sendWidget::~k2sendWidget config written " <<   endl;
     delete m_player;
 }
@@ -154,6 +148,34 @@ void k2sendWidget::readPlaylist()
     ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
 }
 
+void k2sendWidget::writeSourcelist()
+{
+    QStrList list;
+    KFileTreeBranchList branches;
+    KFileTreeBranch * branch;
+    branches = m_source->branches();
+    for ( branch = branches.first(); branch; branch = branches.next() )
+        list.append(branch->rootUrl().path().latin1());
+    m_config->setGroup("source");
+    m_config->writeEntry ("files",list);
+    m_config->sync();
+}
+
+void k2sendWidget::readSourcelist()
+{
+    QStrList list;
+    m_config->setGroup("source");
+    m_config->readListEntry ("files",list);
+    if (list.count()){
+        QStrListIterator it( list );
+        while (it.current()) {
+            QString file = QString::fromUtf8(it.current());
+            openURL(file);
+            ++it;
+        }
+    }
+}
+
 
 void k2sendWidget::customEvent( QCustomEvent * e )
 {
@@ -162,7 +184,6 @@ void k2sendWidget::customEvent( QCustomEvent * e )
     K2sendStatusEvent * se = (K2sendStatusEvent*)e;
     QString * fn;
     switch (t){
-
         case K2sendStatusEvent::EventMessage:
             ((KMainWindow*)parent())->statusBar()->message (se->string(),se->value());
             break;
@@ -214,6 +235,8 @@ void k2sendWidget::customEvent( QCustomEvent * e )
                 fn = new QString(m_head->file());
                 m_player->addFile(fn);
             }
+            break;
+        default:
             break;
 
     }
