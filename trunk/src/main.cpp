@@ -20,7 +20,7 @@
 
 // $Id: main.cpp 2 2004-06-19 09:38:31Z optixx $
 //
-// $HeadURL
+// $HeadURL$
 //
 // $LastChangedBy: optixx $
 
