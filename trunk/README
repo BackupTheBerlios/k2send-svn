@@ -4,13 +4,17 @@ k2end README
 k2send - a kde gui for the BlueMP3 player
 
 
-    * Basic playlist support
+    * Playlist support
 
     * BlueMP3 remote controll to play mp3 files
 
     * Debug console for BlueMP3 sio output
 
     * Loundness support for patched firmware
+
+    * Device scanning
+
+    * M3u playlist import
 
 
 This is the intial alpha release of k2send, so don't expect everything
@@ -75,12 +79,11 @@ MINI-FAQ
 
 Q: I cannot connect to BlueMP3 ?
 A: You have to set bluetooth address first,
-   go to the player tab and click configure and
-   add your device addr,which can be retrieved with
-   'hcitool scan'
+   Go to configuration dialog, start scanning for devices,
+   afterwards select BlueMP3 baddr.
 
 Q: I connected the serial cable, but i don't see any debug log ?
-A: Go to console tab and set correct tty device and ensure that your
+A: Go to configuration dialog and set correct tty device and ensure that your
    user has read permission to the device. Afterwards restart the debug
    poller by clicking the play button within the concole tab context.
    If this doesn't help, please check first if would work with kermit.

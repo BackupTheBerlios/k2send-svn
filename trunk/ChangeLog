@@ -1,5 +1,14 @@
+20040801
+o added drag and drop
+o added systray icon
+o inherit from kapplication
+o m3u playlist import
+o added playlist print support
+o bugfixes
+
 20040617
 o inital release
 o basic bluemp3 handling with command queues
 o basic debug console listing on tty
 o basic playlist based on kconf storage
+
