@@ -69,7 +69,17 @@ void k2sendWidgetBase::slotConsoleConfig()
 
 }
 
+void k2sendWidgetBase::slotConsoleStop()
+{
+
+}
+
 void k2sendWidgetBase::slotConsolePlay()
+{
+
+}
+
+void k2sendWidgetBase::slotConsoleClear()
 {
 
 }

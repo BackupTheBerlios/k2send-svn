@@ -18,77 +18,32 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// $Id: k2send.h 2 2004-06-19 09:38:31Z optixx $
+// $Id$
 //
 // $HeadURL$
 //
-// $LastChangedBy: optixx $
+// $LastChangedBy$
 
 
+#include <kfiletreeview.h>
 
-
-
-#ifndef _K2SEND_H_
-#define _K2SEND_H_
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <kapplication.h>
-#include <kmainwindow.h>
-
-#include "k2sendwidget.h"
-
-class KPrinter;
-class KToggleAction;
-class KURL;
+class QDragObject;
 class KConfig;
-class KSystemTray;
+class k2sendWidget;
 
-class k2send : public KMainWindow
+class K2sendSource : public KFileTreeView
 {
     Q_OBJECT
+
 public:
-    k2send();
-    virtual ~k2send();
-    void load(const KURL& url);
+    K2sendSource(QWidget* parent = 0, const char* name = 0 );
+    ~K2sendSource() {};
+    void write(KConfig * config);
+    void read(KConfig * config);
+signals:
+    void signalChangeStatusbar(const QString& text);
 protected:
-    virtual void dragEnterEvent(QDragEnterEvent *event);
-    virtual void dropEvent(QDropEvent *event);
-
-
-private slots:
-    void fileNew();
-    void fileOpen();
-    void filePrint();
-    void importPlaylist();
-    void optionsShowToolbar();
-    void optionsShowStatusbar();
-    void optionsConfigureKeys();
-    void optionsConfigureToolbars();
-    void optionsPreferences();
-    void newToolbarConfig();
-    void changeStatusbar(const QString& text);
-    void changeCaption(const QString& text);
-
+    virtual QDragObject *  dragObject ();
 private:
-    void setupAccel();
-    void setupActions();
-
-private:
-    k2sendWidget     * m_view;
-    KPrinter         * m_printer;
-    KToggleAction    * m_toolbarAction;
-    KToggleAction    * m_statusbarAction;
-    KConfig          * m_config;
-protected:
-    KSystemTray* trayicon;
+    void addNewBranch(QString & url,bool expand = false);
 };
-
-#endif // _K2SEND_H_
-
-
-
-
-

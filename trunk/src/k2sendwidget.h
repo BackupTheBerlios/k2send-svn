@@ -36,20 +36,30 @@
 class K2sendPlayListItem;
 class K2sendPlayer;
 class K2sendConsole;
-
+class KURL;
+class KPrinter;
 
 class k2sendWidget : public k2sendWidgetBase
 {
     Q_OBJECT
 
 public:
-    k2sendWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    k2sendWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0, KConfig * c = 0);
     ~k2sendWidget();
-    /*$PUBLIC_FUNCTIONS$*/
+    void consoleConfigRefresh(QString& tty);
+    void configRefresh(QString& addr);
     void customEvent( QCustomEvent * e );
+    QString currentURL();
+    void openURL(QString url);
+    void openURL(const KURL& url);
+    void print(QPainter *, KPrinter * kp,int height, int width);
+    void setProgress(int v);
+
+signals:
+    void signalChangeStatusbar(const QString& text);
+    void signalChangeCaption(const QString& text);
 
 public slots:
-    /*$PUBLIC_SLOTS$*/
     virtual void slotPlay();
     virtual void slotStop();
     virtual void slotSkip();
@@ -60,33 +70,31 @@ public slots:
     virtual void slotConfig();
     virtual void slotConsoleConfig();
     virtual void slotLength();
-    virtual void slotSelectItem( QListViewItem * item,const QPoint&, int);
+    virtual void slotSelectItem( QListViewItem *);
     virtual void slotPlaylistClear();
     virtual void slotConsolePlay();
+    virtual void slotConsoleStop();
+    virtual void slotConsoleClear();
     virtual void slotLengthPressed();
+    virtual void slotRemoveBranch();
+    virtual void slotAddFile(QString & path);
 
-
-protected:
-    /*$PROTECTED_FUNCTIONS$*/
-
-protected slots:
-    /*$PROTECTED_SLOTS$*/
-
+private slots:
+    void slotOnURL(const QString& url);
+    void slotSetTitle(const QString& title);
 
 private:
-    bool isDoubleEntry(const QString& file);
-    void readPlaylist();
-    void writePlaylist();
-    void setIndex();
-    void nextIndex();
-    void addDir(const QString & path);
+    void setSelected();
     K2sendPlayer       * m_player;
     K2sendConsole      * m_console_cont;
-    KStatusBar         * m_status;
-    KSimpleConfig      * m_config;
-    K2sendPlayListItem * m_head;
+    KConfig            * m_config;
     bool               length_pressed;
+    QString             m_url;
 };
+
+
+
+
 
 #endif
 

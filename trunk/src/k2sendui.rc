@@ -1,8 +1,43 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <kpartgui name="k2send" version="1">
 <MenuBar>
-  <Menu name="custom"><text>C&amp;ustom</text>
-    <Action name="custom_action" />
+  <Menu name="file" noMerge="1" ><text>&amp;File</text>
+  <Action name="file_new" />
+  <Action name="file_open" />
+  <Action name="file_remove" />
+  <Action name="file_import" />
+  <Separator/>
+  <Action name="file_print" />
+  <Separator/>
+  <Action name="file_quit"/>
+  </Menu>
+  <Menu name="player"><text>&amp;Player</text>
+    <Action name="player_play" />
+    <Action name="player_stop" />
+    <Action name="player_next" />
+    <Separator/>
+    <Action name="player_loudness" />
+  </Menu>
+
+  <Menu name="playlist"><text>Play&amp;list</text>
+    <Action name="playlist_clear" />
+  </Menu>
+  <Menu name="console"><text>&amp;Console</text>
+    <Action name="console_play" />
+    <Action name="console_stop" />
+    <Action name="console_clear" />
   </Menu>
 </MenuBar>
+<ToolBar name="mainToolBar" newline="true" noMerge="1" fullwidth="true">
+  <text>Main Toolbar</text>
+  <Action name="file_new" />
+  <Action name="file_open" />
+  <Action name="file_remove" />
+  <Action name="file_print" />
+  <Separator/>
+  <Action name="preferences"/>
+  <Action name="help_whats_this"/>
+</ToolBar>
 </kpartgui>
+
+

@@ -24,12 +24,13 @@
 //
 // $LastChangedBy: optixx $
 
+#include <qlistview.h>
+#include <klistview.h>
 
+class KlistView;
+class QTimer;
 
-class QListViewItem;
-class KListView;
-
-class  K2sendPlayListItem : public  QListViewItem {
+class  K2sendPlayListItem : public  KListViewItem  {
 
     public:
         K2sendPlayListItem(KListView * p , QString  fn);
@@ -37,14 +38,26 @@ class  K2sendPlayListItem : public  QListViewItem {
         const QString & file() const { return filename; }
         int id() const { return _my_id; }
         int valid() const { return _valid; }
+        virtual void paintCell( QPainter *p, const QColorGroup &cg,
+                                 int column, int width, int alignment );
+        void setPlaying(bool p);
+        bool playing() { return _playing; }
+        QString tag() { return _tag; }
+        void setColor(int r,int g,int b);
 
-     private:
+    private:
          QString filename;
          static int _id;
          int _my_id;
          bool _valid;
-};
+         bool _playing;
+         QString _tag;
+         QColor  _color;
+         int _normal_height;
+         int _double_height;
+         QString str_id;
 
+};
 
 
 

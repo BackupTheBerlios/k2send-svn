@@ -54,7 +54,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="KFileTreeView" row="0" column="0" rowspan="5" colspan="1">
+                    <widget class="K2sendSource" row="0" column="0" rowspan="5" colspan="1">
                         <property name="name">
                             <cstring>m_source</cstring>
                         </property>
@@ -65,7 +65,7 @@
                             </font>
                         </property>
                     </widget>
-                    <widget class="KListView" row="0" column="2" rowspan="5" colspan="1">
+                    <widget class="K2sendPlayList" row="0" column="2" rowspan="5" colspan="1">
                         <property name="name">
                             <cstring>m_playlist</cstring>
                         </property>
@@ -309,6 +309,56 @@
                             </size>
                         </property>
                     </spacer>
+                    <widget class="QGroupBox" row="2" column="3">
+                        <property name="name">
+                            <cstring>groupBox1</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>40</width>
+                                <height>80</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_playlist_clear</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>10</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image7</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Clear Playlist</string>
+                            </property>
+                        </widget>
+                    </widget>
                     <widget class="QButtonGroup" row="3" column="3">
                         <property name="name">
                             <cstring>buttonGroup2</cstring>
@@ -355,84 +405,6 @@
                             </widget>
                         </vbox>
                     </widget>
-                    <widget class="QGroupBox" row="2" column="3">
-                        <property name="name">
-                            <cstring>groupBox1</cstring>
-                        </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>0</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="maximumSize">
-                            <size>
-                                <width>40</width>
-                                <height>80</height>
-                            </size>
-                        </property>
-                        <property name="title">
-                            <string></string>
-                        </property>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>m_config</cstring>
-                            </property>
-                            <property name="geometry">
-                                <rect>
-                                    <x>10</x>
-                                    <y>40</y>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </rect>
-                            </property>
-                            <property name="maximumSize">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                            <property name="pixmap">
-                                <pixmap>image7</pixmap>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Configure</string>
-                            </property>
-                        </widget>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>m_playlist_clear</cstring>
-                            </property>
-                            <property name="geometry">
-                                <rect>
-                                    <x>10</x>
-                                    <y>10</y>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </rect>
-                            </property>
-                            <property name="maximumSize">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                            <property name="pixmap">
-                                <pixmap>image8</pixmap>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Clear Playlist</string>
-                            </property>
-                        </widget>
-                    </widget>
                 </grid>
             </widget>
             <widget class="QWidget">
@@ -469,7 +441,7 @@
                         </property>
                         <widget class="KPushButton">
                             <property name="name">
-                                <cstring>m_console_config</cstring>
+                                <cstring>m_console_clear</cstring>
                             </property>
                             <property name="geometry">
                                 <rect>
@@ -490,34 +462,6 @@
                             </property>
                             <property name="pixmap">
                                 <pixmap>image7</pixmap>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Configure</string>
-                            </property>
-                        </widget>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>m_console_clear</cstring>
-                            </property>
-                            <property name="geometry">
-                                <rect>
-                                    <x>10</x>
-                                    <y>40</y>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </rect>
-                            </property>
-                            <property name="maximumSize">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                            <property name="pixmap">
-                                <pixmap>image8</pixmap>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Clear</string>
@@ -546,6 +490,34 @@
                             </property>
                             <property name="pixmap">
                                 <pixmap>image2</pixmap>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Configure</string>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>m_console_stop</cstring>
+                            </property>
+                            <property name="geometry">
+                                <rect>
+                                    <x>10</x>
+                                    <y>40</y>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </rect>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image3</pixmap>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Configure</string>
@@ -619,9 +591,6 @@
         <data format="PNG" length="807">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002ee49444154789c7d93cd6f147518c73fbfdfccecced6e92ebb94b2a5d836505dc554a484680a898693d19e04ced54323989878303d79e0e23f608c978d18136d301a3d08078c264de30568b712822db6abed76d36d29ebee4ebbe3bc8f87b1eb4b884ff21c9e97cff7f07cf3081e11a397eee8109e220a8721121096d560e7f671ae5ac562f15fbbe23fa001e23d14eda24ca4338f673dba349ffb0f7442a7d91281f5851a34de7f96af2a7b42e21f701e21670ef6ee2f4c9ccd70e6698574970280e34594562caefcb0cbf2ea8387a960f3c2b1e89b9962b1180b8c5efac940c8b9d163870aef8ceb74a754006e2efb003cff445c7b41c8c7371adcb8b555379cc5918232538b2744970ff6f6145e7f49c371c17163f0c2e9c700989e6df3545fbcf9da589ab5ed70ff2f65eb32216f2ba317e77494e4f4b933193ddd05961374326ba87425154606137c77c7410a0fcb0ec9a47ce6cb512170773f53815309ddc86453012b1b11ad3ffebeeb7cd9e4dce934857e8d89b3dd7c74bdc9b5bb294c278b4c4686e91e1d5381e19c21d9367dc65f3840a15f7b94b300bcf5ea3e161fc2c22a484d4748755802c20d142a75e57fe18e5b4320446c9f20922a84e59615b154efe1ddcf43460644c7dd3084e786e0c4600c2facc127b3a04ab07d874468555535d8b9ed3bcd9614f9ccbd6ac4bd6a0480ed2b8c1c86375e8ce1bbeb1153d321290d2460da8d762e585a90c7b96a89c0ba229d4d06d266279fcc35f8602286976b1e1f5e6b72649fc950c6443a9b68fef6b7bdeada86522a95183871fed6ae1d9e1fec517207d21146d2c748fa1cc92769b5033efdbedee9b9b6c5fddfb6aa7ddeec94219b2b0ac02b27537623ecbf5ef95d193774993ddc932495902c566c162b36ba2648aab05a6b33bf54aff6793fbe9997cb7380a500944a255e3e69345a5ef797eb0db5fbd74db7603b6ec2f6429abb2eabb51d6efedc6a6fd4b6bece7bb3537fc166e717f66272721220b1ee3f73c8548e8e09a90e0b222942ab9a0b96167ad5b50da00eb87bdff827c8854a566b0cd1ac0000000049454e44ae426082</data>
     </image>
     <image name="image7">
-        <data format="PNG" length="847">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000031649444154789c85d04b4f5c751c87f1e77fce9973e60093c240196ed35a400b03559b80c601a209a5919026c6a6f505b83271675c9998b847928eae3571a3be80ba20a989095a2fb8d000822222cdd061a6c35ccffdf277d1b4aeaa4ff25dfd92cfe22756573f63783803c81ec3d0bf9f9c1c1d8ee34856ab8dd2f171f956abe57c1a04a125048f73dd80d9d91cf9fcb328aeeb737858c4f3fcb66d7b9f388ed3313979a16b7efef9f19999dc479aa67e0832218440081eef51ea952baf251cc78d1b8d566c18896ff7f78bb5280ae78787cf1abdbddd280a333b3b7fedb8aebfe579214110d06c5a643269c6c6465080cf41ccb65a16dbdbfb148ba5c2e6e6ce0ff57a0b8073e786e8ea32975dd7557ddfc7763c745d6768a81f00656424733d9bcd7ce9fbc1a5288a48268df7e6e62ecfa7529d785e0080a6a9d95ad3ebb42c8766a34d2a65323d3dfaf0a6ebaabdb4b470a15a6d7c512a3df86671f185b72e5e7c8a46c342d3344e4febdc3baedd4f877bcdc5d43a4dc723694d016f3c04f6f6fe3ecce79fcbadac2ce42a95d3dcf878965aad01c408a152a9d468db7166d9bc33ddabd4b76211a2d3faf789fdfd93a1945c9b98384f5f5f37b6ed13c7922088383a2a516fc379737f7440dcbd16f971e838f247d19126bbf0660250d48989977ededd3d88cae55a5e4a34db762997ab388e8b6e76a33ef88ec1e22d06dde2197a8ce596adb79b2727771ba55d2934538a1b37dea5dd6ee338de8a69265f4ea53a262ccb2ba5fb072fdf7ca57b66a45c602838a00fb0cd04472215fef987fa8e65b985961da10108a1904868b72dcbb9dd6cda662c14a73fbef3a2fc65efabd15c239d323a00e89430a6b85a24cdb5ad6d1ddda0a04e4dcd110401711c232548a18703669dd7b33f15dbadd8d6bbf4a58167122a670c48a8a891e46c87afc48afaeafd8a38d1784212811f291f6f6ca2fb92d5d9ab09c1a90b876d4428b9d41b887b3d9d1f3c110050558822d6bede20f41c776dfee94825a9402d40f1023a9528fd9fc023444a0aeb1be01dcbb5c5bca662486a27b075a4fefabf0080a2402c28acff6e7270e2be9feec238a819bf555de5ed7f00ef6178a813fa34ce0000000049454e44ae426082</data>
-    </image>
-    <image name="image8">
         <data format="PNG" length="852">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000031b49444154789c6d93cb6b5c6518c67fdf77be9939339d4b6626e4a68936094643359010af5d48a15a8add44942e0a2e44da6e5cba1277fa27b8192c2e8a4494d94817b6148c97aa649a9a45256692d836b749a6676e67e6f45ce69ce322a28cf8c20befe2fd3def030fafe07f6af6f2aa0ec13c613009a180605379466946163b8542a16757fc074c82f8102d724946d399d1ac4722d2e58f439dc06934856f7da9fcdac7c7cdcfb7171717c31e81d9cbab4308f9dde0407eea9d53194e3ea3914e6800385ec8ca86c5959b6dcaf70e1fc6fdfdb7061f7eb6542c1643ed08fe2d8990b766a747a63e7afb1813430acb76d93b34b13d0842c1405f84579fd569d95a626d5f9cebaafcd5b971616a00c3f3173f191c1c38f7fe591d81c4341bf4a734a68ee751a24bcdf4311f85386ec8d3a331360eb444a52552e3f1f5ebdaeca5928e16fbe2cd93193d9d80186d9e3f31422aa90310d7a334ac805dc3c1727c2c3b2013ef727b339cf2ddf65505cc47f564261bf7a91a1d5e7f6d8c200cb95e6ab05d7548c424b61b128b4a72298d9f368fb1b49e45c6c264cb9d78590193b9a4a4daeaf2d4700c80d52d8bf2ae7de440b6991ecdf0d2893c009547b0b40e32a223a49a5480707d8d0786c6702e02c0764d71b3dcc72be36d2e9c19efc9dd0f4284100840104a09c166d30a5933faf979f328b6d3cf2946728a95dd3e6a4dbb47e0a0e6a224f85d0711583b4a7946a9eb249a520c65368c2437561d4ecfc4f8f45d8d43a3452e93ee11a8991eba52b4ec7a27e7afdd9133b2d811be75453a15c6d22dbebe65716dd9c4760306f269bc6ec80f772d760d0fdb0df01c1be9548874abdf0ca8fb7b02e085f7becdfa91fcf28bd3fd13b94cf49f6b510d5cff680e8290881254eb2ebfdcadee8c3837ce0f6a7f2e6b0067e7e2763d78ecda839af6465297d9c7fb63c4a3928812e8917f7b6bafc3ed356367d8fbf1e2902c97004b03585959e1cc5cb2def4525f6dd7556aabe24ed98e1bb5bd8046dbe5debec9afbf373b7bfb07c521effb0ffe865b8542a1f71b171616c866b3d16d7762ac2d9f382554e249a1c55c11583b397fed4e5f50ae9aa669009d62b108c05f1802603d230b8b9b0000000049454e44ae426082</data>
     </image>
 </images>
@@ -633,22 +602,10 @@
         <slot>slotAddFiles()</slot>
     </connection>
     <connection>
-        <sender>m_config</sender>
-        <signal>released()</signal>
-        <receiver>k2sendwidgetbase</receiver>
-        <slot>slotConfig()</slot>
-    </connection>
-    <connection>
         <sender>m_console_clear</sender>
         <signal>released()</signal>
         <receiver>m_console</receiver>
         <slot>clear()</slot>
-    </connection>
-    <connection>
-        <sender>m_console_config</sender>
-        <signal>released()</signal>
-        <receiver>k2sendwidgetbase</receiver>
-        <slot>slotConsoleConfig()</slot>
     </connection>
     <connection>
         <sender>m_length</sender>
@@ -710,10 +667,18 @@
         <receiver>k2sendwidgetbase</receiver>
         <slot>slotVolume()</slot>
     </connection>
+    <connection>
+        <sender>m_console_stop</sender>
+        <signal>released()</signal>
+        <receiver>k2sendwidgetbase</receiver>
+        <slot>slotConsoleStop()</slot>
+    </connection>
 </connections>
 <includes>
     <include location="global" impldecl="in declaration">kfiletreeview.h</include>
+    <include location="local" impldecl="in implementation">k2sendplaylist.h</include>
     <include location="local" impldecl="in implementation">k2sendwidgetbase.ui.h</include>
+    <include location="local" impldecl="in implementation">k2sendsource.h</include>
 </includes>
 <slots>
     <slot>slotPlay()</slot>
@@ -725,7 +690,9 @@
     <slot>slotRemoveFiles()</slot>
     <slot>slotConfig()</slot>
     <slot>slotConsoleConfig()</slot>
+    <slot>slotConsoleStop()</slot>
     <slot>slotConsolePlay()</slot>
+    <slot>slotConsoleClear()</slot>
     <slot>slotLength()</slot>
     <slot>slotLengthPressed()</slot>
     <slot>slotPlaylistClear()</slot>
@@ -734,7 +701,6 @@
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>klistview.h</includehint>
-    <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>

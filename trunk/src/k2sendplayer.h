@@ -60,6 +60,7 @@ class K2sendStatusEvent : public QCustomEvent
                             EventEnqueue,
                             EventConsole,
                             EventSkip,
+                            EventStop,
                             } Type;
     private:
         QString s;
