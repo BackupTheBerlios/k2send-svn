@@ -44,6 +44,7 @@ class KPrinter;
 class KToggleAction;
 class KURL;
 class KConfig;
+class KSystemTray;
 
 class k2send : public KMainWindow
 {
@@ -61,6 +62,7 @@ private slots:
     void fileNew();
     void fileOpen();
     void filePrint();
+    void importPlaylist();
     void optionsShowToolbar();
     void optionsShowStatusbar();
     void optionsConfigureKeys();
@@ -80,7 +82,8 @@ private:
     KToggleAction    * m_toolbarAction;
     KToggleAction    * m_statusbarAction;
     KConfig          * m_config;
-
+protected:
+    KSystemTray* trayicon;
 };
 
 #endif // _K2SEND_H_

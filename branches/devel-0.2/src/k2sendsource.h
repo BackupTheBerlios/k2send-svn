@@ -39,9 +39,11 @@ public:
     K2sendSource(QWidget* parent = 0, const char* name = 0 );
     ~K2sendSource() {};
     void write(KConfig * config);
-    void read(KConfig * config,k2sendWidget * w);
+    void read(KConfig * config);
 signals:
     void signalChangeStatusbar(const QString& text);
 protected:
     virtual QDragObject *  dragObject ();
+private:
+    void addNewBranch(QString & url,bool expand = false);
 };

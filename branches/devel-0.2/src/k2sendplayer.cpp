@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *   Copyright (C) 2004 by David Voswinkel                                 *
  *   d.voswinkel@netcologne.de                                             *
@@ -98,6 +97,8 @@ K2sendPlayerCommand *  K2sendPlayer::command() {
 }
 
 void K2sendPlayer::addFile(QString * file) {
+    if (!file)
+        return;
     file_mutex.lock();
     file_queue.enqueue (file);
     file_mutex.unlock();
@@ -165,6 +166,8 @@ void K2sendPlayer::run()
                             blueClose();
                         delete cmd;
                         cmd = 0;
+                        se = new K2sendStatusEvent(K2sendStatusEvent::EventStop);
+                        QApplication::postEvent( m_parent, se );
                         break;
                     case K2sendPlayerCommand::Volume:
                     case K2sendPlayerCommand::Loudness:

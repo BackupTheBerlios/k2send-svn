@@ -31,6 +31,8 @@
 #include <kprinter.h>
 #include <qpainter.h>
 #include <qpaintdevicemetrics.h>
+#include <qfile.h>
+#include <qtextstream.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -51,6 +53,9 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kdebug.h>
+#include <ksystemtray.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 k2send::k2send()
     : KMainWindow( 0, "k2send" ),
@@ -73,6 +78,15 @@ k2send::k2send()
     statusBar()->changeItem ("0 Files", 0);
     statusBar()->changeItem ("0 kbit/s", 2);
 
+    trayicon = new KSystemTray(this, "k2sendtray");
+    trayicon->show();
+    trayicon->setPixmap (DesktopIcon( "k2send", 24));
+    KPopupMenu * pop = trayicon->contextMenu() ;
+    pop->insertItem(DesktopIcon( "player_play", 16 ), "Play",  m_view, SLOT(slotPlay()), CTRL+Key_P ,1,1);
+    pop->insertItem(DesktopIcon( "player_stop", 16 ), "Stop",  m_view, SLOT(slotStop()), CTRL+Key_S ,2,2);
+    pop->insertItem(DesktopIcon( "player_fwd", 16 ), "Next",  m_view, SLOT(slotNext()), CTRL+Key_N ,3,3);
+    pop->insertItem( "Loundess",  m_view, SLOT(slotLoudness()), CTRL+Key_L ,4,4);
+
     connect(m_view, SIGNAL(signalChangeStatusbar(const QString&)),
             this,   SLOT(changeStatusbar(const QString&)));
     connect(m_view, SIGNAL(signalChangeCaption(const QString&)),
@@ -88,12 +102,17 @@ k2send::~k2send()
 
 void k2send::setupActions()
 {
+
+
+
     KAction *action;
     KShortcut cut;
     setXMLFile( "k2sendui.rc" );
     KStdAction::openNew(this, SLOT(fileNew()), actionCollection(),"file_new");
 
     KStdAction::open(this, SLOT(fileOpen()), actionCollection(),"file_open");
+
+    action = new KAction(i18n("Import Playlist"), cut, this, SLOT(importPlaylist()), actionCollection(), "file_import");
 
     KStdAction::print(this, SLOT(filePrint()), actionCollection(),"file_print");
     KStdAction::quit(kapp, SLOT(quit()), actionCollection(),"file_quit");
@@ -118,6 +137,8 @@ void k2send::setupActions()
     action = new KAction(i18n("Stop"), "player_stop", cut,m_view, SLOT(slotConsoleStop()), actionCollection(), "console_stop");
     action = new KAction(i18n("Clear"), "reload", cut,m_view, SLOT(slotConsoleClear()), actionCollection(), "console_clear");
     createGUI();
+
+
 
 }
 void k2send::load(const KURL& url)
@@ -154,6 +175,25 @@ void k2send::fileOpen()
         m_view->openURL(url);
 }
 
+void k2send::importPlaylist()
+{
+    KURL url = KFileDialog::getOpenFileName (QString::null,"*.m3u",this, i18n("Import M3u playlist"));
+    if (!url.isEmpty()){
+        QFile file( url.path() );
+        if ( file.open( IO_ReadOnly ) ) {
+            QTextStream stream( &file );
+            QString line;
+            while ( !stream.atEnd() ) {
+                line = stream.readLine();
+                if (line[0] != '#')
+                    m_view->slotAddFile(line);
+
+                kdDebug(200010) << "k2send::importPlaylist  " <<   line << endl;
+            }
+            file.close();
+        }
+    }
+}
 void k2send::filePrint()
 {
     if (!m_printer) m_printer = new KPrinter;

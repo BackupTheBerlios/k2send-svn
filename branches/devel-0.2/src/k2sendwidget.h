@@ -77,21 +77,17 @@ public slots:
     virtual void slotConsoleClear();
     virtual void slotLengthPressed();
     virtual void slotRemoveBranch();
+    virtual void slotAddFile(QString & path);
 
 private slots:
     void slotOnURL(const QString& url);
     void slotSetTitle(const QString& title);
 
 private:
-    void setIndex();
-    void nextIndex();
     void setSelected();
-
     K2sendPlayer       * m_player;
     K2sendConsole      * m_console_cont;
     KConfig            * m_config;
-    K2sendPlayListItem * m_head;
-    K2sendPlayListItem * m_last;
     bool               length_pressed;
     QString             m_url;
 };

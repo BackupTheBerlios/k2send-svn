@@ -60,7 +60,7 @@
 
 
 k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig * c)
-        : k2sendWidgetBase(parent,name,fl) ,m_config(c), m_head(NULL) , m_last(NULL),length_pressed(FALSE)
+        : k2sendWidgetBase(parent,name,fl) ,m_config(c),length_pressed(FALSE)
 {
     KUser user;
     m_config->setGroup("bluetooth");
@@ -83,7 +83,7 @@ k2sendWidget::k2sendWidget(QWidget* parent, const char* name, WFlags fl,KConfig 
     m_console_cont->setTty(tty);
     m_volume->setValue(volume);
     m_playlist->read(m_config);
-    m_source->read(m_config,this);
+    m_source->read(m_config);
 
     connect( m_playlist, SIGNAL(executed( QListViewItem *) ),
         this, SLOT( slotSelectItem( QListViewItem *) ) );
@@ -110,7 +110,6 @@ void k2sendWidget::customEvent( QCustomEvent * e )
 
     K2sendStatusEvent::Type  t = (K2sendStatusEvent::Type)e->type();
     K2sendStatusEvent * se = (K2sendStatusEvent*)e;
-    QString * fn;
     switch (t){
         case K2sendStatusEvent::EventMessage:
             ((KMainWindow*)parent())->statusBar()->message (se->string(),se->value());
@@ -150,20 +149,14 @@ void k2sendWidget::customEvent( QCustomEvent * e )
             m_volume->setTracking(TRUE);
             break;
         case K2sendStatusEvent::EventSkip:
-            nextIndex();
+            m_playlist->nextIndex();
+            break;
+        case K2sendStatusEvent::EventStop:
+            m_playlist->stopHead();
             break;
         case K2sendStatusEvent::EventEnqueue:
             kdDebug(200010) << " K2sendStatusEvent::EventEnqueue: fetch file" << endl;
-            if (m_head){
-                if (m_last){
-                    m_last->setPlaying(FALSE);
-                }
-                m_head->setPlaying(TRUE);
-
-                kdDebug(200010) << " K2sendStatusEvent::EventEnqueue: m_head=" << m_head->file() << endl;
-                fn = new QString(m_head->file());
-                m_player->addFile(fn);
-            }
+            m_player->addFile(m_playlist->nextFile());
             break;
         default:
             break;
@@ -171,67 +164,18 @@ void k2sendWidget::customEvent( QCustomEvent * e )
     }
 }
 
-
-void k2sendWidget::setIndex()
-{
-    QListViewItemIterator it( m_playlist );
-    while ( it.current() ) {
-        K2sendPlayListItem *item = (K2sendPlayListItem*)it.current();
-        if ( item->isSelected() ){
-            m_last = m_head;
-            m_head = item;
-
-            break;
-        }
-        ++it;
-    }
-    if (!m_head){
-        kdDebug(200010) << " K2sendWidget::setIndex take firstChild" << endl;
-        m_head = (K2sendPlayListItem*) m_playlist->firstChild();
-    }
-    if (m_head)
-        kdDebug(200010) << " K2sendWidget::setIndex m_head=" << m_head->file() << endl;
-}
-void k2sendWidget::nextIndex()
-{
-
-    QListViewItemIterator it( m_playlist );
-    if (m_head){
-        while ( it.current() ) {
-            K2sendPlayListItem *item =(K2sendPlayListItem*) it.current();
-            if ( item->id() == m_head->id() ){
-                ++it;
-                m_last = m_head;
-                m_head = (K2sendPlayListItem*)it.current();
-                break;
-            }
-            ++it;
-        }
-    }
-    if (!m_head){
-        kdDebug(200010) << " K2sendWidget::nextIndex take firstChild" << endl;
-        m_head = (K2sendPlayListItem*)  m_playlist->firstChild();
-    }
-    if (m_head)
-        kdDebug(200010) << " K2sendWidget::nextIndex m_head=" << m_head->file() << endl;
-}
-
-
 void k2sendWidget::slotSelectItem(QListViewItem * item){
     if (m_playlist->childCount()){
-        if (m_head)
-            m_head->setPlaying(FALSE);
-        m_head = (K2sendPlayListItem*) item;
+        m_playlist->setHead(item);
         K2sendPlayerCommand * c = new K2sendPlayerCommand(K2sendPlayerCommand::Play,0);
         m_player->addCommand(c);
    }
 }
 
-
 void k2sendWidget::slotPlay()
 {
     if (m_playlist->childCount()){
-        setIndex();
+        m_playlist->setIndex();
         K2sendPlayerCommand * c = new K2sendPlayerCommand(K2sendPlayerCommand::Play,0);
         m_player->addCommand(c);
     }
@@ -240,16 +184,14 @@ void k2sendWidget::slotPlay()
 void k2sendWidget::slotStop()
 {
     K2sendPlayerCommand * c = new K2sendPlayerCommand(K2sendPlayerCommand::Stop,0);
-    if (m_head)
-        m_head->setPlaying(FALSE);
     m_player->addCommand(c);
-
+    m_playlist->stopHead();
 }
 
 void k2sendWidget::slotSkip()
 {
     if (m_playlist->childCount()){
-        nextIndex();
+        m_playlist->nextIndex();
         K2sendPlayerCommand * c = new K2sendPlayerCommand(K2sendPlayerCommand::Skip,0);
         m_player->addCommand(c);
     }
@@ -277,7 +219,7 @@ void k2sendWidget::slotLength()
 
 void k2sendWidget::slotLengthPressed()
 {
-        length_pressed = TRUE;
+    length_pressed = TRUE;
 }
 
 void k2sendWidget::slotAddFiles()
@@ -292,6 +234,14 @@ void k2sendWidget::slotAddFiles()
     emit signalChangeStatusbar(msg);
 }
 
+void k2sendWidget::slotAddFile(QString & path)
+{
+    m_playlist->add(path);
+    QString msg = QString("%1 Files").arg(m_playlist->childCount());
+    emit signalChangeStatusbar(msg);
+}
+
+
 void k2sendWidget::slotRemoveBranch()
 {
     kdDebug(200010) << "k2sendWidget::slotRemoveBranch" << endl;
@@ -302,8 +252,6 @@ void k2sendWidget::slotRemoveBranch()
             m_source->removeBranch(item->branch());
     }
 }
-
-
 
 void k2sendWidget::slotRemoveFiles()
 {
@@ -319,8 +267,8 @@ void k2sendWidget::slotRemoveFiles()
 }
 
 void k2sendWidget::slotPlaylistClear(){
-    m_head = 0;
     m_playlist->clear();
+    m_playlist->clearHead();
     QString msg = QString("%1 Files").arg(m_playlist->childCount());
     emit signalChangeStatusbar(msg);
 }
@@ -353,6 +301,7 @@ void k2sendWidget::slotConsoleConfig()
         m_config->sync();
     }
 }
+
 void k2sendWidget::configRefresh(QString & addr)
 {
     m_player->setAddr(addr);
@@ -381,7 +330,6 @@ void k2sendWidget::slotConsoleClear()
 {
     m_console->clear();
 }
-
 
 void k2sendWidget::print(QPainter *p, KPrinter *kp,int height, int width)
 {

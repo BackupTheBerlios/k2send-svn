@@ -30,6 +30,7 @@
 #include <qstrlist.h>
 #include <qvaluelist.h>
 #include <qstringlist.h>
+#include <qlistview.h>
 
 #include <kdebug.h>
 #include <kurl.h>
@@ -84,15 +85,21 @@ void K2sendSource::write(KConfig * config)
     KFileTreeBranchList branches;
     KFileTreeBranch * branch;
     branches = ((KFileTreeView*)this)->branches();
-    for ( branch = branches.first(); branch; branch = branches.next() )
+    for ( branch = branches.first(); branch; branch = branches.next() ){
         list.append(branch->rootUrl().path().latin1());
+        if (branch->root()  && branch->root()->isOpen())
+            list.append("True");
+        else
+            list.append("False");
 
+
+    }
     config->setGroup("source");
     config->writeEntry ("files",list);
     config->sync();
 }
 
-void K2sendSource::read(KConfig * config,k2sendWidget * w)
+void K2sendSource::read(KConfig * config)
 {
     QStrList list;
     config->setGroup("source");
@@ -101,8 +108,30 @@ void K2sendSource::read(KConfig * config,k2sendWidget * w)
         QStrListIterator it( list );
         while (it.current()) {
             QString file = QString::fromUtf8(it.current());
-            w->openURL(file);
+            ++it;
+
+            if (it.current() && QString::fromUtf8(it.current()) == "True")
+                addNewBranch(file,TRUE);
+            else
+                addNewBranch(file,FALSE);
             ++it;
         }
+    }
+}
+
+void K2sendSource::addNewBranch(QString & url,bool expand)
+{
+    KFileTreeBranchList branches;
+    KFileTreeBranch * branch;
+    branches = this->branches();
+    bool ok = TRUE;
+    for ( branch = branches.first(); branch; branch = branches.next() )
+        if (branch->rootUrl().path() == url)
+            ok = FALSE;
+
+    if (ok){
+        branch = addBranch(url,url);
+        if (expand)
+            branch->setOpen(TRUE);
     }
 }

@@ -68,7 +68,7 @@
 
 k2sendPreferences::k2sendPreferences(KConfig *c)
     : KDialogBase(TreeList, i18n("k2send Preferences"),
-                Help|Default|Ok|Apply|Cancel, Ok) ,m_config(c)
+                Help|Default|Ok|Apply|Cancel, Ok) ,m_scan_thread(0), m_config(c)
 {
 
 
@@ -164,6 +164,8 @@ void k2sendPreferences::slotOk()
 {
     kdDebug(200010) << "k2sendPreferences::slotOk()" << endl;
     slotApply();
+    if(m_scan_thread && m_scan_thread->running())
+        m_scan_thread->terminate();
     done(TRUE);
 }
 

@@ -27,7 +27,10 @@ public:
     void next();
     void setIndex();
     void nextIndex();
-    QString & nextFile();
+    QString * nextFile();
+    void setHead( QListViewItem *);
+    void stopHead();
+    void clearHead();
 
 public slots:
     void insertDroppedEvent(QDropEvent *e, QListViewItem *parent, QListViewItem *after);
@@ -35,9 +38,11 @@ signals:
     void signalChangeStatusbar(const QString& text);
 
 private:
-    QPoint pressPos;
-    bool dragging;
     K2sendPlayListItem * m_head;
     K2sendPlayListItem * m_last;
+    int c;
+    int dir;
 
+protected:
+    void timerEvent( QTimerEvent * );
 };

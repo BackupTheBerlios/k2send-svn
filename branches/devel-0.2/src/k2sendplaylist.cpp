@@ -19,9 +19,8 @@
 #include "k2sendwidget.h"
 
 K2sendPlayList::K2sendPlayList( QWidget* parent, const char* name )
-    : KListView( parent, name )
+    : KListView( parent, name ) , m_head(NULL) , m_last(NULL),c(0),dir(1)
 {
-    dragging = FALSE;
     addColumn("Id",30);
     addColumn("Tile",80);
     addColumn("Album",80);
@@ -35,9 +34,11 @@ K2sendPlayList::K2sendPlayList( QWidget* parent, const char* name )
     setAcceptDrops(TRUE);
     setDropVisualizer(TRUE);
     setItemsMovable (TRUE);
+    setAllColumnsShowFocus(TRUE);
 
      connect( this, SIGNAL(dropped (QDropEvent *, QListViewItem *, QListViewItem *)),
          this, SLOT(insertDroppedEvent(QDropEvent *, QListViewItem *, QListViewItem *)));
+     startTimer(50);
 }
 
 K2sendPlayList::~K2sendPlayList()
@@ -47,7 +48,6 @@ K2sendPlayList::~K2sendPlayList()
 
 bool K2sendPlayList::acceptDrag(QDropEvent * event) const
 {
-    kdDebug(200010) << "K2sendPlayList::acceptDrag " << event->format() << endl;
     if (KURLDrag::canDecode(event)){
         event->accept();
         return TRUE;
@@ -120,7 +120,6 @@ void K2sendPlayList::addDir(const QString & path,K2sendPlayListItem * after )
 {
     K2sendPlayListItem * new_item;
     K2sendPlayListItem * last_item;
-
     QDir dir(path);
     dir.setMatchAllDirs (TRUE);
     dir.setFilter( QDir::All );
@@ -181,9 +180,11 @@ void K2sendPlayList::read(KConfig * config)
         while (it.current()) {
             QString file = QString::fromUtf8(it.current());
             K2sendPlayListItem * new_item = new K2sendPlayListItem((KListView*)this,file);
-            if (new_item->valid())
+            if (new_item->valid()){
                 this->insertItem (new_item);
-            else {
+                new_item->moveItem(lastChild());
+
+            } else {
                 delete new_item;
             }++it;
         }
@@ -216,7 +217,6 @@ void K2sendPlayList::setIndex()
 }
 void K2sendPlayList::nextIndex()
 {
-
     QListViewItemIterator it( this );
     if (m_head){
         while ( it.current() ) {
@@ -238,3 +238,55 @@ void K2sendPlayList::nextIndex()
         kdDebug(200010) << " K2sendPlayList::nextIndex m_head=" << m_head->file() << endl;
 }
 
+void K2sendPlayList::setHead(QListViewItem * item)
+{
+    if (this->childCount()){
+        if (m_head)
+            m_head->setPlaying(FALSE);
+        m_head = (K2sendPlayListItem*) item;
+    }
+}
+
+
+QString * K2sendPlayList::nextFile()
+{
+    QString * filename = 0;
+    if (m_head){
+        if (m_last){
+            m_last->setPlaying(FALSE);
+        }
+        m_head->setPlaying(TRUE);
+        filename= new QString(m_head->file());
+    }
+    return filename;
+}
+
+void K2sendPlayList::stopHead()
+{
+    if (m_head)
+        m_head->setPlaying(FALSE);
+
+}
+
+void K2sendPlayList::clearHead()
+{
+    m_head = 0;
+}
+
+
+void K2sendPlayList::timerEvent( QTimerEvent *e )
+{
+    if (m_head && m_head->playing()){
+        if (dir){
+            c = c + 15;
+            if (c >=255)
+                dir = !dir;
+        } else {
+            c = c - 15;
+            if (c <= 0)
+                dir = !dir;
+        }
+        m_head->setColor(c,0,0);
+        m_head->repaint();
+    }
+}
