@@ -1,0 +1,18 @@
+[Breakpoint 0]
+Enabled=true
+File=/home/david/devel/projects/k2send/src/main.cpp
+Line=41
+Temporary=false
+
+[General]
+DebuggerCmdStr=
+DriverName=GDB
+FileVersion=1
+OptionsSelected=
+ProgramArgs=
+TTYLevel=7
+WorkingDirectory=
+
+[Memory]
+ColumnWidths=80,0
+NumExprs=0
