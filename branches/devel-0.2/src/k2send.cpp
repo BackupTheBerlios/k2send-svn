@@ -91,12 +91,12 @@ void k2send::setupActions()
     KAction *action;
     KShortcut cut;
     setXMLFile( "k2sendui.rc" );
-    KStdAction::openNew(this, SLOT(fileNew()), actionCollection());
+    KStdAction::openNew(this, SLOT(fileNew()), actionCollection(),"file_new");
 
-    KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+    KStdAction::open(this, SLOT(fileOpen()), actionCollection(),"file_open");
 
-    KStdAction::print(this, SLOT(filePrint()), actionCollection());
-    KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+    KStdAction::print(this, SLOT(filePrint()), actionCollection(),"file_print");
+    KStdAction::quit(kapp, SLOT(quit()), actionCollection(),"file_quit");
 
     m_toolbarAction = KStdAction::showToolbar(this, SLOT(optionsShowToolbar()), actionCollection());
     m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
@@ -104,6 +104,8 @@ void k2send::setupActions()
     KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
     KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
     KStdAction::preferences(this, SLOT(optionsPreferences()), actionCollection(),"preferences");
+
+    action = new KAction(i18n("Remove"), "editdelete", cut, m_view, SLOT(slotRemoveBranch()), actionCollection(), "file_remove");
 
     action = new KAction(i18n("Play"), "player_play", cut, m_view, SLOT(slotPlay()), actionCollection(), "player_play");
     action = new KAction(i18n("Stop"), "player_stop", cut,m_view, SLOT(slotStop()), actionCollection(), "player_stop");

@@ -191,3 +191,50 @@ void K2sendPlayList::read(KConfig * config)
     QString msg = QString("%1 Files").arg(this->childCount());
     emit signalChangeStatusbar(msg);
 }
+
+
+
+void K2sendPlayList::setIndex()
+{
+    QListViewItemIterator it( this );
+    while ( it.current() ) {
+        K2sendPlayListItem *item = (K2sendPlayListItem*)it.current();
+        if ( item->isSelected() ){
+            m_last = m_head;
+            m_head = item;
+
+            break;
+        }
+        ++it;
+    }
+    if (!m_head){
+        kdDebug(200010) << " K2sendPlayList::setIndex take firstChild" << endl;
+        m_head = (K2sendPlayListItem*) this->firstChild();
+    }
+    if (m_head)
+        kdDebug(200010) << " K2sendPlayList::setIndex m_head=" << m_head->file() << endl;
+}
+void K2sendPlayList::nextIndex()
+{
+
+    QListViewItemIterator it( this );
+    if (m_head){
+        while ( it.current() ) {
+            K2sendPlayListItem *item =(K2sendPlayListItem*) it.current();
+            if ( item->id() == m_head->id() ){
+                ++it;
+                m_last = m_head;
+                m_head = (K2sendPlayListItem*)it.current();
+                break;
+            }
+            ++it;
+        }
+    }
+    if (!m_head){
+        kdDebug(200010) << " K2sendPlayList::nextIndex take firstChild" << endl;
+        m_head = (K2sendPlayListItem*)  this->firstChild();
+    }
+    if (m_head)
+        kdDebug(200010) << " K2sendPlayList::nextIndex m_head=" << m_head->file() << endl;
+}
+

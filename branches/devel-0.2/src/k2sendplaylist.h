@@ -24,6 +24,10 @@ public:
     void add(const QString & path,K2sendPlayListItem * after = 0);
     void write(KConfig * config,k2sendWidget * w);
     void read(KConfig * config);
+    void next();
+    void setIndex();
+    void nextIndex();
+    QString & nextFile();
 
 public slots:
     void insertDroppedEvent(QDropEvent *e, QListViewItem *parent, QListViewItem *after);
@@ -33,4 +37,7 @@ signals:
 private:
     QPoint pressPos;
     bool dragging;
+    K2sendPlayListItem * m_head;
+    K2sendPlayListItem * m_last;
+
 };

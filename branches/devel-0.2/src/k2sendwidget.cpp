@@ -159,6 +159,7 @@ void k2sendWidget::customEvent( QCustomEvent * e )
                     m_last->setPlaying(FALSE);
                 }
                 m_head->setPlaying(TRUE);
+
                 kdDebug(200010) << " K2sendStatusEvent::EventEnqueue: m_head=" << m_head->file() << endl;
                 fn = new QString(m_head->file());
                 m_player->addFile(fn);
@@ -288,8 +289,21 @@ void k2sendWidget::slotAddFiles()
         m_playlist->add(item->path());
 
     QString msg = QString("%1 Files").arg(m_playlist->childCount());
-    ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
+    emit signalChangeStatusbar(msg);
 }
+
+void k2sendWidget::slotRemoveBranch()
+{
+    kdDebug(200010) << "k2sendWidget::slotRemoveBranch" << endl;
+    QPtrList< QListViewItem > list = m_source->selectedItems ();
+    KFileTreeViewItem * item ;
+    for ( item = (KFileTreeViewItem*)list.first(); item; item = (KFileTreeViewItem*)list.next()){
+        if(item->branch())
+            m_source->removeBranch(item->branch());
+    }
+}
+
+
 
 void k2sendWidget::slotRemoveFiles()
 {
@@ -300,7 +314,7 @@ void k2sendWidget::slotRemoveFiles()
             m_playlist->removeItem(item);
         }
         QString msg = QString("%1 Files").arg(m_playlist->childCount());
-        ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
+        emit signalChangeStatusbar(msg);
     }
 }
 
@@ -308,7 +322,7 @@ void k2sendWidget::slotPlaylistClear(){
     m_head = 0;
     m_playlist->clear();
     QString msg = QString("%1 Files").arg(m_playlist->childCount());
-    ((KMainWindow*)parent())->statusBar()->changeItem(msg, 0);
+    emit signalChangeStatusbar(msg);
 }
 
 void k2sendWidget::slotConfig()
@@ -351,15 +365,14 @@ void k2sendWidget::consoleConfigRefresh(QString & tty)
 
 void k2sendWidget::slotConsolePlay()
 {
-    ((KMainWindow*)parent())->statusBar()->message("Starting console", 2000);
+    emit signalChangeStatusbar("Starting console");
     m_console_cont->restart();
 }
 
 void k2sendWidget::slotConsoleStop()
 {
-
     if (m_console_cont->running()){
-        ((KMainWindow*)parent())->statusBar()->message("Stopping console", 2000);
+        emit signalChangeStatusbar("Shutdown console");
         m_console_cont->stop();
     }
 }

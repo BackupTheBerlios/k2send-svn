@@ -28,9 +28,10 @@
 #include <klistview.h>
 
 class KlistView;
+class QTimer;
 
+class  K2sendPlayListItem : public  QListViewItem  {
 
-class  K2sendPlayListItem : public  QListViewItem {
     public:
         K2sendPlayListItem(KListView * p , QString  fn);
         ~K2sendPlayListItem();
@@ -39,10 +40,10 @@ class  K2sendPlayListItem : public  QListViewItem {
         int valid() const { return _valid; }
         virtual void paintCell( QPainter *p, const QColorGroup &cg,
                                  int column, int width, int alignment );
-        void setPlaying(bool p) { _playing = p; this->repaint() ;  }
+        void setPlaying(bool p);
         QString tag() { return _tag; }
-/*    protected:
-        virtual void timerEvent( QTimerEvent *e);*/
+
+
     private:
          QString filename;
          static int _id;

@@ -76,6 +76,7 @@ public slots:
     virtual void slotConsoleStop();
     virtual void slotConsoleClear();
     virtual void slotLengthPressed();
+    virtual void slotRemoveBranch();
 
 private slots:
     void slotOnURL(const QString& url);

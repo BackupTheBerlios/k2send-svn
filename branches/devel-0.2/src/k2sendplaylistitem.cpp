@@ -27,6 +27,7 @@
 
 #include <klistview.h>
 #include <kdebug.h>
+#include <kfilemetainfo.h>
 
 #include <taglib.h>
 #include <tag.h>
@@ -39,6 +40,7 @@
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qobject.h>
+#include <qtimer.h>
 
 #include "k2sendplaylistitem.h"
 
@@ -56,6 +58,16 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) :
     _valid = TRUE;
     c = 0;
     dir = 0;
+
+//     KFileMetaInfo info (filename,"audio/x-mp3");
+//     kdDebug(200010) << "K2sendPlayListItem mime=" << info.mimeType()  << endl;
+//
+//     if (info.mimeType() != "audio/x-mp3") {
+//          _valid = FALSE;
+//          return;
+//     }
+
+
     TagLib::MPEG::File mp3file(filename.latin1());
 
     if(!mp3file.tag() || !mp3file.isValid()){
@@ -88,22 +100,13 @@ K2sendPlayListItem::K2sendPlayListItem(KListView * p , QString  fn) :
     rate.sprintf("%i", mp3file.audioProperties()->bitrate());
     setText(4,length);
     setText(5,rate);
-    //startTimer(100);
 }
 
+void K2sendPlayListItem::setPlaying(bool p) {
+     _playing = p;
+    repaint() ;
+}
 
-// void K2sendPlayListItem::timerEvent( QTimerEvent *e ){
-//     if (dir){
-//         c = c + 15;
-//         if (c >=255)
-//             dir = !dir;
-//     } else {
-//         c = c - 15;
-//         if (c <= 0)
-//             dir = !dir;
-//     }
-// }
-//
 
 void K2sendPlayListItem::paintCell( QPainter *p, const QColorGroup &cg,
                                  int column, int width, int alignment )
@@ -122,4 +125,3 @@ void K2sendPlayListItem::paintCell( QPainter *p, const QColorGroup &cg,
 K2sendPlayListItem::~K2sendPlayListItem(){
 
 }
-

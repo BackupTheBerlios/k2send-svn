@@ -678,7 +678,7 @@
     <include location="global" impldecl="in declaration">kfiletreeview.h</include>
     <include location="local" impldecl="in implementation">k2sendplaylist.h</include>
     <include location="local" impldecl="in implementation">k2sendwidgetbase.ui.h</include>
-    <include location="local" impldecl="in implementation">k2sensource.h</include>
+    <include location="local" impldecl="in implementation">k2sendsource.h</include>
 </includes>
 <slots>
     <slot>slotPlay()</slot>
